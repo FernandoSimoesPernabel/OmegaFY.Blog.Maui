@@ -1,13 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
+using OmegaFY.Blog.Maui.App.Infra.Extensions;
 
 namespace OmegaFY.Blog.Maui.App;
+
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        var builder = MauiApp.CreateBuilder();
-        builder
-            .UseMauiApp<App>()
+        MauiAppBuilder builder = MauiApp.CreateBuilder();
+
+        builder.UseMauiApp<App>()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -15,8 +17,12 @@ public static class MauiProgram
             });
 
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
+
+        builder.Services.AddUserPreferencesStorage();
+
+        builder.Services.AddSafeStorage();
 
         return builder.Build();
     }
