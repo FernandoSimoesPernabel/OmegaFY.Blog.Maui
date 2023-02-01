@@ -2,5 +2,6 @@
 
 public enum PreferencesKey
 {
-    DisplayName = 0
+    BearerToken = 0,
+    UserDisplayName = 1
 }

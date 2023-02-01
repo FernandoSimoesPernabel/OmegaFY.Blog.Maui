@@ -2,5 +2,5 @@
 
 public enum SafeStorageKey
 {
-    BearerToken = 0
+    RefreshToken = 0
 }

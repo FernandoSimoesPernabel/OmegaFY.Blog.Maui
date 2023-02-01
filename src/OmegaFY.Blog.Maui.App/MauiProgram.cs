@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using OmegaFY.Blog.Maui.App.Infra.Extensions;
+using OmegaFY.Blog.Maui.App.ViewModels.Extensions;
 
 namespace OmegaFY.Blog.Maui.App;
 
@@ -23,6 +24,10 @@ public static class MauiProgram
         builder.Services.AddUserPreferencesStorage();
 
         builder.Services.AddSafeStorage();
+
+        builder.Services.AddExternalServices();
+
+        builder.Services.AddViewsAndViewModels();
 
         return builder.Build();
     }

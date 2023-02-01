@@ -1,4 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage;
+﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Implementations;
+using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storage.SafeStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storage.SafeStorage.Implementations;
@@ -19,6 +21,13 @@ public static class DependencyInjectionExtensions
     {
         services.AddSingleton(SecureStorage.Default);
         services.AddSingleton<ISafeStorageProvider, DefaultSecureStorage>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddExternalServices(this IServiceCollection services)
+    {
+        services.AddSingleton<IOmegaFyBlogClient, OmegaFyBlogClient>();
 
         return services;
     }
