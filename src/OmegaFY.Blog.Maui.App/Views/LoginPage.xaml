@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:OmegaFY.Blog.Maui.App.ViewModels"
-             x:DataType="viewmodel:MainPageViewModel"
+             x:DataType="viewmodel:LoginPageViewModel"
              Title="{Binding ViewTitle}"
-             x:Class="OmegaFY.Blog.Maui.App.MainPage">
+             x:Class="OmegaFY.Blog.Maui.App.Views.LoginPage">
 
     <ContentPage.Content>
         <Grid BackgroundColor="#1C375C" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
@@ -35,11 +35,11 @@
 
                     <Label Grid.Row="1" Margin="0,-15,0,0" HorizontalOptions="CenterAndExpand" Text="Login in to account" TextColor="#1C375C" />
 
-                    <Entry Grid.Row="2" Margin="0,20,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" Text="{Binding Email}" VerticalOptions="FillAndExpand" />
+                    <Entry Grid.Row="2" Margin="0,20,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" Text="{Binding UserEmail}" VerticalOptions="FillAndExpand" />
 
                     <Entry Grid.Row="3" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" Text="{Binding Password}" VerticalOptions="FillAndExpand" />
 
-                    <Button Grid.Row="4" BackgroundColor="#1C375C" Command="{Binding LoginCommand}" CornerRadius="20" Text="Login" />
+                    <Button Grid.Row="4" BackgroundColor="#1C375C" IsEnabled="{Binding EnableLoginButton}" Command="{Binding LoginCommand}" CornerRadius="20" Text="Login" />
 
                     <Button Grid.Row="5" BackgroundColor="#1C375C" Command="{Binding RegisterNewUserCommand}" CornerRadius="20" Text="Register using Email" />
 

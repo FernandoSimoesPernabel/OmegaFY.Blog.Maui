@@ -60,12 +60,17 @@
   <ItemGroup>
     <Folder Include="Services\" />
     <Folder Include="Resources\Raw\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="CommunityToolkit.Mvvm.ComponentModel" />
     <Using Include="CommunityToolkit.Mvvm.Input" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

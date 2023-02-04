@@ -1,11 +1,13 @@
-﻿namespace OmegaFY.Blog.Maui.App.ViewModels.Extensions;
+﻿using OmegaFY.Blog.Maui.App.Views;
+
+namespace OmegaFY.Blog.Maui.App.ViewModels.Extensions;
 
 public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddViewsAndViewModels(this IServiceCollection services)
     {
-        services.AddSingleton<MainPage>();
-        services.AddSingleton<MainPageViewModel>();
+        services.AddSingleton<LoginPage>();
+        services.AddSingleton<LoginPageViewModel>();
 
         return services;
     }

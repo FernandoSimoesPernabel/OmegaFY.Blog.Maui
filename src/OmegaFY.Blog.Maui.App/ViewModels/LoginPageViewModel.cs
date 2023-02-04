@@ -2,15 +2,19 @@
 
 namespace OmegaFY.Blog.Maui.App.ViewModels;
 
-public partial class MainPageViewModel : BaseViewModel
+public partial class LoginPageViewModel : BaseViewModel
 {
     [ObservableProperty]
-    private string email;
+    [NotifyPropertyChangedFor(nameof(EnableLoginButton))]
+    private string userEmail;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(EnableLoginButton))]
     private string password;
 
-    public MainPageViewModel()
+    public bool EnableLoginButton => !string.IsNullOrWhiteSpace(UserEmail) && !string.IsNullOrWhiteSpace(Password);
+
+    public LoginPageViewModel()
     {
         ViewTitle = "Main Page";
     }
