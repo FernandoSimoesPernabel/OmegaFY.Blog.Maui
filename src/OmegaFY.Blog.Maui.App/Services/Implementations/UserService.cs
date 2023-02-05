@@ -1,4 +1,9 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
+using OmegaFY.Blog.Maui.App.Domain.Commands.ExcludeAccount;
+using OmegaFY.Blog.Maui.App.Domain.Commands.Login;
+using OmegaFY.Blog.Maui.App.Domain.Commands.Logoff;
+using OmegaFY.Blog.Maui.App.Domain.Commands.RefreshToken;
+using OmegaFY.Blog.Maui.App.Domain.Commands.RegisterNewUser;
 
 namespace OmegaFY.Blog.Maui.App.Services.Implementations;
 
@@ -11,12 +16,27 @@ internal class UserService : IUserService
         _omegaFyBlogClient = omegaFyBlogClient;
     }
 
-    public Task<object> LoginAsync()
+    public Task<ExcludeAccountCommandResult> ExcludeAccountAsync(ExcludeAccountCommand command)
     {
         throw new NotImplementedException();
     }
 
-    public Task<object> RegisterNewUserAsync()
+    public Task<LoginCommandResult> LoginAsync(LoginCommand command)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<LogoffCommandResult> LogoffAsync(LogoffCommand command)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<RefreshTokenCommandResult> RefreshTokenAsync(RefreshTokenCommand command)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<RegisterNewUserCommandResult> RegisterNewUserAsync(RegisterNewUserCommand command)
     {
         throw new NotImplementedException();
     }

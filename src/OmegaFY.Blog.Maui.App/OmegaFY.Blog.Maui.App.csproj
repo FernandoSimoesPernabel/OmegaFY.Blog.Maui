@@ -58,6 +58,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Domain\Models\" />
+    <Folder Include="Domain\Queries\" />
     <Folder Include="Resources\Raw\" />
   </ItemGroup>
 
