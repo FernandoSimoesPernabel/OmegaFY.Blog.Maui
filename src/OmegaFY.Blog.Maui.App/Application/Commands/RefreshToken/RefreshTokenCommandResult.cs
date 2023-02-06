@@ -1,8 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Models.Base;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
 
-namespace OmegaFY.Blog.Maui.App.Domain.Commands.RefreshToken;
-
-public class RefreshTokenCommandResult : GenericResult
+public class RefreshTokenCommandResult
 {
     public string Token { get; set; }
 

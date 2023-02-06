@@ -1,4 +1,4 @@
-﻿namespace OmegaFY.Blog.Maui.App.Domain.Commands.Login;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Login;
 
 public class LoginCommand
 {

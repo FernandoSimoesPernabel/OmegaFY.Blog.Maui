@@ -53,13 +53,12 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-    <PackageReference Include="LiteDB" Version="5.0.15" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Models\" />
-    <Folder Include="Domain\Queries\" />
+    <Folder Include="Data\SQLite\" />
+    <Folder Include="Application\Queries\" />
     <Folder Include="Resources\Raw\" />
   </ItemGroup>
 

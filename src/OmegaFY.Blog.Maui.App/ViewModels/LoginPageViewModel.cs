@@ -1,4 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Services;
+﻿using OmegaFY.Blog.Maui.App.Application.Commands.Login;
+using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
+using OmegaFY.Blog.Maui.App.Services;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels;
@@ -25,14 +27,24 @@ public partial class LoginPageViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public Task LoginAsync()
+    public async Task LoginAsync()
     {
-        return Task.CompletedTask;
+        LoginCommandResult result = await _userService.LoginAsync(new LoginCommand(UserEmail, Password));
+
+        //if (result.Succeeded)
+        //{
+        //    //Proxima tela
+        //}
     }
 
     [RelayCommand]
-    public Task RegisterNewUserAsync()
+    public async Task RegisterNewUserAsync()
     {
-        return Task.CompletedTask;
+        RegisterNewUserCommandResult result = await _userService.RegisterNewUserAsync(null);
+
+        //if (result.Succeeded)
+        //{
+        //    //Proxima tela
+        //}
     }
 }

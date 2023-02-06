@@ -1,4 +1,4 @@
-﻿namespace OmegaFY.Blog.Maui.App.Domain.Commands.Logoff;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Logoff;
 
 public class LogoffCommand
 {

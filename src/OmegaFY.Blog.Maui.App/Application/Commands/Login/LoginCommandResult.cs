@@ -1,8 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Models.Base;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Login;
 
-namespace OmegaFY.Blog.Maui.App.Domain.Commands.Login;
-
-public class LoginCommandResult : GenericResult
+public class LoginCommandResult
 {
     public string Token { get; set; }
 

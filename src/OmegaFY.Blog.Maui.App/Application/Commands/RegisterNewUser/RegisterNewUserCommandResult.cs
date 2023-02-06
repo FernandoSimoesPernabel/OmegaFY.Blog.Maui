@@ -1,8 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Models.Base;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
 
-namespace OmegaFY.Blog.Maui.App.Domain.Commands.RegisterNewUser;
-
-public class RegisterNewUserCommandResult : GenericResult
+public class RegisterNewUserCommandResult
 {
     public Guid UserId { get; set; }
 

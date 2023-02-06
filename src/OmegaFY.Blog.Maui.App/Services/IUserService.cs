@@ -1,8 +1,8 @@
-﻿using OmegaFY.Blog.Maui.App.Domain.Commands.ExcludeAccount;
-using OmegaFY.Blog.Maui.App.Domain.Commands.Login;
-using OmegaFY.Blog.Maui.App.Domain.Commands.Logoff;
-using OmegaFY.Blog.Maui.App.Domain.Commands.RefreshToken;
-using OmegaFY.Blog.Maui.App.Domain.Commands.RegisterNewUser;
+﻿using OmegaFY.Blog.Maui.App.Application.Commands.ExcludeAccount;
+using OmegaFY.Blog.Maui.App.Application.Commands.Login;
+using OmegaFY.Blog.Maui.App.Application.Commands.Logoff;
+using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
+using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
 
 namespace OmegaFY.Blog.Maui.App.Services;
 
