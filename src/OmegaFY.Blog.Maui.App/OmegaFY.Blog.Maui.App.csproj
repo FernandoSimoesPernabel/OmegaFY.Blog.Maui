@@ -53,12 +53,14 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Requests\" />
     <Folder Include="Data\SQLite\" />
-    <Folder Include="Application\Queries\" />
     <Folder Include="Resources\Raw\" />
   </ItemGroup>
 

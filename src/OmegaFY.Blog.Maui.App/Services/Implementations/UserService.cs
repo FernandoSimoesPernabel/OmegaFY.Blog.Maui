@@ -1,12 +1,8 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
-using OmegaFY.Blog.Maui.App.Application.Commands.ExcludeAccount;
-using OmegaFY.Blog.Maui.App.Application.Commands.Login;
-using OmegaFY.Blog.Maui.App.Application.Commands.Logoff;
-using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
-using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
 using OmegaFY.Blog.Maui.App.Application.Models;
 using OmegaFY.Blog.Maui.App.Application.Repositories;
-using OmegaFY.Blog.Maui.App.Application.Base;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices.DTOs;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Base;
 
 namespace OmegaFY.Blog.Maui.App.Services.Implementations;
 

@@ -1,5 +1,4 @@
-﻿using OmegaFY.Blog.Maui.App.Application.Commands.Login;
-using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
+﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices.DTOs;
 using OmegaFY.Blog.Maui.App.Services;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;
 

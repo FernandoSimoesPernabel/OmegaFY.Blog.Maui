@@ -1,4 +1,4 @@
-﻿namespace OmegaFY.Blog.Maui.App.Application.Base;
+﻿namespace OmegaFY.Blog.Maui.App.Common.Models;
 
 public class ValidationError
 {

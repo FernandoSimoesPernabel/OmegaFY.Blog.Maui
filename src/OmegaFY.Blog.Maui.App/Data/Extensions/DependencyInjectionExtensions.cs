@@ -1,6 +1,4 @@
-﻿using OmegaFY.Blog.Maui.App.Application.Repositories;
-
-namespace OmegaFY.Blog.Maui.App.Application.Extensions;
+﻿namespace OmegaFY.Blog.Maui.App.Data.Extensions;
 
 public static class DependencyInjectionExtensions
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using OmegaFY.Blog.Maui.App.Application.Extensions;
+using OmegaFY.Blog.Maui.App.Data.Extensions;
 using OmegaFY.Blog.Maui.App.Infra.Extensions;
 using OmegaFY.Blog.Maui.App.Services.Extensions;
 using OmegaFY.Blog.Maui.App.ViewModels.Extensions;

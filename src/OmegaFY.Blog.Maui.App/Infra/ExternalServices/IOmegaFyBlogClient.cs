@@ -1,5 +1,5 @@
-﻿using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.Login;
+﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Base;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices.DTOs;
 
 namespace OmegaFY.Blog.Maui.App.Infra.ExternalServices;
 
