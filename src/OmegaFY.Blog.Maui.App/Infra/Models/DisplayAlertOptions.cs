@@ -6,20 +6,17 @@ public readonly record struct DisplayAlertOptions
 
     public string Message { get; }
 
-    public string Accept { get; }
+    public string Ok { get; }
 
     public string Cancel { get; }
 
-    public DisplayAlertOptions()
-    {
+    public DisplayAlertOptions(string title, string message) : this(title, message, nameof(Ok), nameof(Cancel)) { }
 
-    }
-
-    public DisplayAlertOptions(string title, string message, string accept, string cancel)
+    public DisplayAlertOptions(string title, string message, string ok, string cancel)
     {
         Title = title;
         Message = message;
-        Accept = accept;
+        Ok = ok;
         Cancel = cancel;
     }
 }

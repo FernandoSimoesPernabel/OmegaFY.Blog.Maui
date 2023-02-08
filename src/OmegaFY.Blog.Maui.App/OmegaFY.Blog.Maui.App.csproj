@@ -59,7 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Requests\" />
+    <Folder Include="Application\Queries\" />
     <Folder Include="Data\SQLite\" />
     <Folder Include="Resources\Raw\" />
   </ItemGroup>

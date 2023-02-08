@@ -1,13 +1,12 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices.DTOs;
-using OmegaFY.Blog.Maui.App.Services;
+﻿using MediatR;
+using OmegaFY.Blog.Maui.App.Application.Base;
+using OmegaFY.Blog.Maui.App.Application.Commands.Login;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels;
 
 public partial class LoginPageViewModel : BaseViewModel
 {
-    private readonly IUserService _userService;
-
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(EnableLoginButton))]
     private string userEmail;
@@ -18,17 +17,17 @@ public partial class LoginPageViewModel : BaseViewModel
 
     public bool EnableLoginButton => !string.IsNullOrWhiteSpace(UserEmail) && !string.IsNullOrWhiteSpace(Password);
 
-    public LoginPageViewModel(IUserService userService)
+    public LoginPageViewModel(IMediator mediator) : base(mediator)
     {
-        _userService = userService;
-
         ViewTitle = "Main Page";
     }
 
     [RelayCommand]
     public async Task LoginAsync()
     {
-        LoginCommandResult result = await _userService.LoginAsync(new LoginCommand(UserEmail, Password));
+        LoginCommand command = new LoginCommand(UserEmail, Password);
+
+        GenericResult<LoginCommandResult> result = await _mediator.Send(command);
 
         //if (result.Succeeded)
         //{
@@ -39,7 +38,9 @@ public partial class LoginPageViewModel : BaseViewModel
     [RelayCommand]
     public async Task RegisterNewUserAsync()
     {
-        RegisterNewUserCommandResult result = await _userService.RegisterNewUserAsync(null);
+        //RegisterNewUserCommand command = null;
+
+        //GenericResult<RegisterNewUserCommandResult> result = await _mediator.Send(command);
 
         //if (result.Succeeded)
         //{

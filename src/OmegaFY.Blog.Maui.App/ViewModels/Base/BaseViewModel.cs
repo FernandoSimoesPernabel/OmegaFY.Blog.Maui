@@ -1,4 +1,6 @@
-﻿namespace OmegaFY.Blog.Maui.App.ViewModels.Base;
+﻿using MediatR;
+
+namespace OmegaFY.Blog.Maui.App.ViewModels.Base;
 
 public abstract partial class BaseViewModel : ObservableObject
 {
@@ -10,4 +12,11 @@ public abstract partial class BaseViewModel : ObservableObject
     private string viewTitle;
 
     public bool IsNotBusy => !IsBusy;
+
+    protected readonly IMediator _mediator;
+
+    protected BaseViewModel(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
 }

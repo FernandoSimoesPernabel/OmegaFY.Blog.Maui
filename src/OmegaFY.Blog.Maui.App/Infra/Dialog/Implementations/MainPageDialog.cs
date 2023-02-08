@@ -19,34 +19,38 @@ internal class MainPageDialog : IDialogProvider
         return await Microsoft.Maui.Controls.Application.Current.MainPage.DisplayAlert(
             options.Title,
             options.Message,
-            options.Accept,
+            options.Ok,
             options.Cancel);
     }
 
-    public async Task DisplayAlertAsync(DisplayAlertOptions options, Func<Task<bool>> funcDisplayAlertDialog)
+    public async Task<bool> DisplayAlertAsync(DisplayAlertOptions options, Func<Task<bool>> funcDisplayAlertDialog)
     {
         bool shouldDisplayAlertDialog = await funcDisplayAlertDialog();
 
         while (shouldDisplayAlertDialog)
         {
             if (!await DisplayAlertAsync(options))
-                break;
+                return false;
 
             shouldDisplayAlertDialog = await funcDisplayAlertDialog();
         }
+
+        return true;
     }
 
-    public async Task DisplayAlertAsync(DisplayAlertOptions options, Func<bool> funcDisplayAlertDialog)
+    public async Task<bool> DisplayAlertAsync(DisplayAlertOptions options, Func<bool> funcDisplayAlertDialog)
     {
         bool shouldDisplayAlertDialog = funcDisplayAlertDialog();
 
         while (shouldDisplayAlertDialog)
         {
             if (!await DisplayAlertAsync(options))
-                break;
+                return false;
 
             shouldDisplayAlertDialog = funcDisplayAlertDialog();
         }
+
+        return true;
     }
 
     public async Task<string> DisplayPromptAsync(DisplayPromptOptions options)
