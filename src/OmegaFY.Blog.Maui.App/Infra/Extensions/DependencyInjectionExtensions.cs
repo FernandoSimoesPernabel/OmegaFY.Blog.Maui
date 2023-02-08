@@ -1,4 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
+﻿using OmegaFY.Blog.Maui.App.Infra.Dialog;
+using OmegaFY.Blog.Maui.App.Infra.Dialog.Implementations;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage.Implementations;
@@ -28,6 +30,20 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddExternalServices(this IServiceCollection services)
     {
         services.AddSingleton<IOmegaFyBlogClient, OmegaFyBlogClient>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddConnectivity(this IServiceCollection services)
+    {
+        services.AddSingleton(Connectivity.Current);
+
+        return services;
+    }
+
+    public static IServiceCollection AddDialog(this IServiceCollection services)
+    {
+        services.AddSingleton<IDialogProvider, MainPageDialog>();
 
         return services;
     }

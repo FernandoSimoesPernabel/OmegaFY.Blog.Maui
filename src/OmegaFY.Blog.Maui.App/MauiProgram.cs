@@ -35,6 +35,10 @@ public static class MauiProgram
 
         builder.Services.AddRepositories();
 
+        builder.Services.AddConnectivity();
+
+        builder.Services.AddDialog();
+
         return builder.Build();
     }
 }
