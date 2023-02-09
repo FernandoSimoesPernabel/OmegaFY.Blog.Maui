@@ -6,9 +6,9 @@ namespace OmegaFY.Blog.Maui.App.Infra.ExternalServices.Implementations;
 
 internal class OmegaFyBlogClient : AbstractHttpClient, IOmegaFyBlogClient
 {
-    public OmegaFyBlogClient() : base()
-    {
-    }
+    protected override string HttpClientName => nameof(OmegaFyBlogClient);
+
+    public OmegaFyBlogClient(IHttpClientFactory httpClientFactory) : base(httpClientFactory) { }
 
     public async Task<ApiResponse<LoginCommandResult>> LoginAsync(LoginCommand command, CancellationToken cancellationToken)
     {

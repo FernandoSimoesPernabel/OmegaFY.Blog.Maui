@@ -6,13 +6,9 @@ internal abstract class AbstractHttpClient
 {
     protected readonly HttpClient _httpClient;
 
-    protected AbstractHttpClient()
-    {
-        _httpClient = new()
-        {
-            BaseAddress = new Uri("https://localhost:7141/api/")
-        };
-    }
+    protected abstract string HttpClientName { get; }
+
+    protected AbstractHttpClient(IHttpClientFactory httpClientFactory) => _httpClient = httpClientFactory.CreateClient(HttpClientName);
 
     protected async Task<TResult> GetAsync<TResult>(string route, CancellationToken cancellationToken)
     {

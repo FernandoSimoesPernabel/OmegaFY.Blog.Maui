@@ -1,6 +1,7 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.Dialog;
 using OmegaFY.Blog.Maui.App.Infra.Dialog.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices.HttpInterceptors;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage.Implementations;
@@ -29,6 +30,13 @@ public static class DependencyInjectionExtensions
 
     public static IServiceCollection AddExternalServices(this IServiceCollection services)
     {
+        services.AddHttpClient(nameof(OmegaFyBlogClient), client =>
+        {
+            client.BaseAddress = new Uri("https://localhost:7141/api/");
+        }).AddHttpMessageHandler<AuthenticationInterceptor>();
+
+        services.AddTransient<AuthenticationInterceptor>();
+
         services.AddSingleton<IOmegaFyBlogClient, OmegaFyBlogClient>();
 
         return services;

@@ -35,11 +35,11 @@
 
                     <Label Grid.Row="1" Margin="0,-15,0,0" HorizontalOptions="CenterAndExpand" Text="Login in to account" TextColor="#1C375C" />
 
-                    <Entry Grid.Row="2" Margin="0,20,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" Text="{Binding UserEmail}" VerticalOptions="FillAndExpand" />
+                    <Entry Grid.Row="2" Margin="0,20,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" Text="{Binding UserEmail, Mode=OneWay}" VerticalOptions="FillAndExpand" />
 
-                    <Entry Grid.Row="3" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" Text="{Binding Password}" VerticalOptions="FillAndExpand" />
+                    <Entry Grid.Row="3" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" Text="{Binding Password, Mode=OneWay}" VerticalOptions="FillAndExpand" />
 
-                    <Button Grid.Row="4" BackgroundColor="#1C375C" IsEnabled="{Binding EnableLoginButton}" Command="{Binding LoginCommand}" CornerRadius="20" Text="Login" />
+                    <Button Grid.Row="4" BackgroundColor="#1C375C" IsEnabled="{Binding EnableLoginButton, Mode=OneWay}" Command="{Binding LoginCommand}" CornerRadius="20" Text="Login" />
 
                     <Button Grid.Row="5" BackgroundColor="#1C375C" Command="{Binding RegisterNewUserCommand}" CornerRadius="20" Text="Register using Email" />
 
