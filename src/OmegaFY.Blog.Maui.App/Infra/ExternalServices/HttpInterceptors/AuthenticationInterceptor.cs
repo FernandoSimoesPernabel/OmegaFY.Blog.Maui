@@ -1,6 +1,6 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.Enums;
-using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage;
-using OmegaFY.Blog.Maui.App.Infra.Storage.SafeStorage;
+using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
+using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 using System.Net;
 using System.Net.Http.Headers;
 

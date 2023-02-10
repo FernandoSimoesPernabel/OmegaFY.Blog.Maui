@@ -1,6 +1,6 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.Models;
 
-namespace OmegaFY.Blog.Maui.App.Infra.Dialog;
+namespace OmegaFY.Blog.Maui.App.Infra.Dialogs;
 
 public interface IDialogProvider
 {

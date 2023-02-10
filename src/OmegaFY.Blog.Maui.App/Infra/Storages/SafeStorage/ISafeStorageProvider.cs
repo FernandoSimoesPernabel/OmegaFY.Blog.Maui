@@ -1,6 +1,6 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.Enums;
 
-namespace OmegaFY.Blog.Maui.App.Infra.Storage.SafeStorage;
+namespace OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 
 public interface ISafeStorageProvider
 {

@@ -1,6 +1,6 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.Enums;
 
-namespace OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage;
+namespace OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 
 public interface IUserPreferencesProvider
 {

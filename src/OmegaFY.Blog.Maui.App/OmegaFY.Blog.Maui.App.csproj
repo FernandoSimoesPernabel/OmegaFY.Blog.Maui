@@ -52,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="MediatR" Version="11.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
@@ -68,6 +69,7 @@
   <ItemGroup>
     <Using Include="CommunityToolkit.Mvvm.ComponentModel" />
     <Using Include="CommunityToolkit.Mvvm.Input" />
+    <Using Include="CommunityToolkit.Maui" />
   </ItemGroup>
 
   <ItemGroup>

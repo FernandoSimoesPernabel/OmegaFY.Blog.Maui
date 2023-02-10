@@ -1,7 +1,7 @@
 ﻿using OmegaFY.Blog.Maui.App.Common.Serializers;
 using OmegaFY.Blog.Maui.App.Infra.Enums;
 
-namespace OmegaFY.Blog.Maui.App.Infra.Storage.SafeStorage.Implementations;
+namespace OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage.Implementations;
 
 internal class DefaultSecureStorage : ISafeStorageProvider
 {

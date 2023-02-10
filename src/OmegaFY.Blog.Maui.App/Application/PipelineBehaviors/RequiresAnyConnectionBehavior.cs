@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Infra.Dialog;
+using OmegaFY.Blog.Maui.App.Infra.Dialogs;
 using OmegaFY.Blog.Maui.App.Infra.Extensions;
 
 namespace OmegaFY.Blog.Maui.App.Application.PipelineBehaviors;

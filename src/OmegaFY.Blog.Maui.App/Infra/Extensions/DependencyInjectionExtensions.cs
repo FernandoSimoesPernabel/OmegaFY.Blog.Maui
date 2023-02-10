@@ -1,12 +1,12 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.Dialog;
-using OmegaFY.Blog.Maui.App.Infra.Dialog.Implementations;
+﻿using OmegaFY.Blog.Maui.App.Infra.Dialogs;
+using OmegaFY.Blog.Maui.App.Infra.Dialogs.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.HttpInterceptors;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Implementations;
-using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage;
-using OmegaFY.Blog.Maui.App.Infra.Storage.PreferencesStorage.Implementations;
-using OmegaFY.Blog.Maui.App.Infra.Storage.SafeStorage;
-using OmegaFY.Blog.Maui.App.Infra.Storage.SafeStorage.Implementations;
+using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
+using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage.Implementations;
+using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
+using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage.Implementations;
 
 namespace OmegaFY.Blog.Maui.App.Infra.Extensions;
 
