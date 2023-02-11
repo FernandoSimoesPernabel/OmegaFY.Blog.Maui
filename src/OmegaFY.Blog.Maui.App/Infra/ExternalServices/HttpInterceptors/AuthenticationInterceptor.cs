@@ -1,6 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.Enums;
-using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
-using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
+﻿using OmegaFY.Blog.Maui.App.Application.Base;
+using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
+using OmegaFY.Blog.Maui.App.Services;
 using System.Net;
 using System.Net.Http.Headers;
 
@@ -8,19 +8,16 @@ namespace OmegaFY.Blog.Maui.App.Infra.ExternalServices.HttpInterceptors;
 
 internal class AuthenticationInterceptor : DelegatingHandler
 {
-    private readonly IUserPreferencesProvider _userPreferencesProvider;
+    private readonly ILoggedUserService _loggedUserService;
 
-    private readonly ISafeStorageProvider _safeStorageProvider;
-
-    public AuthenticationInterceptor(IUserPreferencesProvider userPreferencesProvider, ISafeStorageProvider safeStorageProvider)
+    public AuthenticationInterceptor(ILoggedUserService loggedUserService)
     {
-        _userPreferencesProvider = userPreferencesProvider;
-        _safeStorageProvider = safeStorageProvider;
+        _loggedUserService = loggedUserService;
     }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        string bearerToken = _userPreferencesProvider.GetPreference<string>(PreferencesKey.BearerToken);
+        string bearerToken = _loggedUserService.TryGetUserBearerToken();
 
         if (bearerToken is null)
             return await base.SendAsync(request, cancellationToken);
@@ -32,27 +29,16 @@ internal class AuthenticationInterceptor : DelegatingHandler
         if (originalHttpResponse.StatusCode != HttpStatusCode.Unauthorized)
             return originalHttpResponse;
 
-        string refreshToken = await _safeStorageProvider.GetAsync(SafeStorageKey.RefreshToken);
+        Guid? refreshToken = await _loggedUserService.TryGetUserRefreshTokenAsync();
 
-        if (refreshToken is null)
+        if (!refreshToken.HasValue)
             return originalHttpResponse;
 
-        //RefreshToken call
-        HttpResponseMessage refreshTokenResponse = null;
+        GenericResult<RefreshTokenCommandResult> refreshTokenResult =
+            await _loggedUserService.RefreshTokenAsync(new RefreshTokenCommand(bearerToken, refreshToken.Value));
 
-        if (!refreshTokenResponse.IsSuccessStatusCode)
-        {
-            _userPreferencesProvider.RemovePreference(PreferencesKey.BearerToken);
-            _safeStorageProvider.Remove(SafeStorageKey.RefreshToken);
-
+        if (!refreshTokenResult.Succeeded)
             return originalHttpResponse;
-        }
-
-        bearerToken = ""; //Pega bearerToken do result
-        refreshToken = ""; //Pega refresh do result
-
-        _userPreferencesProvider.SetPreference(PreferencesKey.BearerToken, bearerToken);
-        await _safeStorageProvider.SetAsync(SafeStorageKey.RefreshToken, refreshToken);
 
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
 

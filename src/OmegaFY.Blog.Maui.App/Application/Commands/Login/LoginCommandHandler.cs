@@ -1,27 +1,20 @@
 ﻿using MediatR;
 using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Extensions;
-using OmegaFY.Blog.Maui.App.Application.Models;
-using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
-using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Base;
+using OmegaFY.Blog.Maui.App.Services;
 
 namespace OmegaFY.Blog.Maui.App.Application.Commands.Login;
 
 internal class LoginCommandHandler : IRequestHandler<LoginCommand, GenericResult<LoginCommandResult>>
 {
-    private readonly IOmegaFyBlogClient _omegaFyBlogClient;
+    private readonly ILoggedUserService _loggedUserService;
 
-    public LoginCommandHandler(IOmegaFyBlogClient omegaFyBlogClient)
+    public LoginCommandHandler(ILoggedUserService loggedUserService)
     {
-        _omegaFyBlogClient = omegaFyBlogClient;
+        _loggedUserService = loggedUserService;
     }
 
     public async Task<GenericResult<LoginCommandResult>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        LoggedUserInfo loggedUser = new();
-
-        ApiResponse<LoginCommandResult> result = await _omegaFyBlogClient.LoginAsync(request, CancellationToken.None);
-
-        return result.ToGenericResult();
+        return await _loggedUserService.LoginAsync(request);
     }
 }

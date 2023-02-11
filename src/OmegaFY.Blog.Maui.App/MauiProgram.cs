@@ -2,6 +2,7 @@
 using OmegaFY.Blog.Maui.App.Application.Extensions;
 using OmegaFY.Blog.Maui.App.Data.Extensions;
 using OmegaFY.Blog.Maui.App.Infra.Extensions;
+using OmegaFY.Blog.Maui.App.Services.Extensions;
 using OmegaFY.Blog.Maui.App.ViewModels.Extensions;
 
 namespace OmegaFY.Blog.Maui.App;
@@ -28,6 +29,8 @@ public static class MauiProgram
 
         builder.Services.AddSafeStorage();
 
+        builder.Services.AddFileSystemStorage();
+
         builder.Services.AddExternalServices();
 
         builder.Services.AddViewsAndViewModels();
@@ -37,6 +40,8 @@ public static class MauiProgram
         builder.Services.AddConnectivity();
 
         builder.Services.AddDialog();
+
+        builder.Services.AddServices();
 
         builder.Services.AddServiceBusMediatR();
 

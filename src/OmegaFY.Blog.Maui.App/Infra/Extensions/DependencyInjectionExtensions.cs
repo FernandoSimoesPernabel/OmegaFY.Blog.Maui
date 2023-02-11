@@ -3,6 +3,8 @@ using OmegaFY.Blog.Maui.App.Infra.Dialogs.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.HttpInterceptors;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Implementations;
+using OmegaFY.Blog.Maui.App.Infra.Storages.FileSystemStorage;
+using OmegaFY.Blog.Maui.App.Infra.Storages.FileSystemStorage.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
@@ -24,6 +26,14 @@ public static class DependencyInjectionExtensions
     {
         services.AddSingleton(SecureStorage.Default);
         services.AddSingleton<ISafeStorageProvider, DefaultSecureStorage>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddFileSystemStorage(this IServiceCollection services)
+    {
+        services.AddSingleton(FileSystem.Current);
+        services.AddSingleton<IFileSystemStorageProvider, DefautlFileSystemStorage>();
 
         return services;
     }
