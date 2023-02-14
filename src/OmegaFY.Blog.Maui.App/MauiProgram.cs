@@ -25,6 +25,8 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
+        builder.Configuration.AddConfiguration();
+
         builder.Services.AddUserPreferencesStorage();
 
         builder.Services.AddSafeStorage();

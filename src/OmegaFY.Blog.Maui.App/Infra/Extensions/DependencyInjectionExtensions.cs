@@ -1,4 +1,6 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.Dialogs;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using OmegaFY.Blog.Maui.App.Infra.Dialogs;
 using OmegaFY.Blog.Maui.App.Infra.Dialogs.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.HttpInterceptors;
@@ -9,11 +11,25 @@ using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage.Implementations;
+using System.Reflection;
 
 namespace OmegaFY.Blog.Maui.App.Infra.Extensions;
 
 public static class DependencyInjectionExtensions
 {
+    public static IConfiguration AddConfiguration(this ConfigurationManager configuration)
+    {
+        Assembly assembly = typeof(App).GetTypeInfo().Assembly;
+
+        IConfigurationRoot configurationRoot = new ConfigurationBuilder()
+            .AddJsonFile(new EmbeddedFileProvider(assembly), "appsettings.json", optional: false, false)
+            .Build();
+
+        configuration.AddConfiguration(configurationRoot);
+
+        return configuration;
+    }
+
     public static IServiceCollection AddUserPreferencesStorage(this IServiceCollection services)
     {
         services.AddSingleton(Preferences.Default);
