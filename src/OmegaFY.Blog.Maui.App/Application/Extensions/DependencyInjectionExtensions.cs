@@ -7,10 +7,13 @@ public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddServiceBusMediatR(this IServiceCollection services)
     {
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequiresAnyConnectionBehavior<,>));
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequiresStrongConnectionBehavior<,>));
+        services.AddMediatR(options =>
+        {
+            options.RegisterServicesFromAssembly(typeof(DependencyInjectionExtensions).Assembly);
 
-        services.AddMediatR(typeof(DependencyInjectionExtensions).Assembly);
+            options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(RequiresAnyConnectionBehavior<,>));
+            options.AddBehavior(typeof(IPipelineBehavior<,>), typeof(RequiresStrongConnectionBehavior<,>));
+        });
 
         return services;
     }
