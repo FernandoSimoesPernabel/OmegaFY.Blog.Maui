@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using OmegaFY.Blog.Maui.App.Application.Base;
 using OmegaFY.Blog.Maui.App.Application.Commands.Login;
+using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels;
@@ -29,22 +30,22 @@ public partial class LoginPageViewModel : BaseViewModel
 
         GenericResult<LoginCommandResult> result = await _mediator.Send(command);
 
-        //if (result.Succeeded)
-        //{
-        //    //Proxima tela
-        //}
+        if (result.Succeeded)
+        {
+            //Proxima tela
+        }
     }
 
     [RelayCommand]
     public async Task RegisterNewUserAsync()
     {
-        //RegisterNewUserCommand command = null;
+        RegisterNewUserCommand command = null;
 
-        //GenericResult<RegisterNewUserCommandResult> result = await _mediator.Send(command);
+        GenericResult<RegisterNewUserCommandResult> result = await _mediator.Send(command);
 
-        //if (result.Succeeded)
-        //{
-        //    //Proxima tela
-        //}
+        if (result.Succeeded)
+        {
+            //Proxima tela
+        }
     }
 }

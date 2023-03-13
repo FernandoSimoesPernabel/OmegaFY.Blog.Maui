@@ -1,6 +1,9 @@
-﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
+﻿using MediatR;
+using OmegaFY.Blog.Maui.App.Application.Base;
 
-public class RegisterNewUserCommand
+namespace OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
+
+public class RegisterNewUserCommand : IRequest<GenericResult<RegisterNewUserCommandResult>>, IRequiresStrongConnection, IRequiresAnyConnection
 {
     public string Email { get; }
 
