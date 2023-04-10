@@ -1,6 +1,6 @@
 ﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Login;
 
-public class LoginCommandResult
+public sealed record class LoginCommandResult
 {
     public Guid UserId { get; set; }
 

@@ -3,7 +3,7 @@ using OmegaFY.Blog.Maui.App.Common.Models;
 
 namespace OmegaFY.Blog.Maui.App.Application.Base;
 
-public class GenericResult<T>
+public abstract record class GenericResult<T>
 {
     public bool Succeeded { get; }
 

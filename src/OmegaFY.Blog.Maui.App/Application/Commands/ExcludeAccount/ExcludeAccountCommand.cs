@@ -1,5 +1,5 @@
 ﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.ExcludeAccount;
 
-public class ExcludeAccountCommand
+public sealed record class ExcludeAccountCommand
 {
 }

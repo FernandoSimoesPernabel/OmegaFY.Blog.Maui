@@ -3,7 +3,7 @@ using OmegaFY.Blog.Maui.App.Application.Base;
 
 namespace OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
 
-public class RegisterNewUserCommand : IRequest<GenericResult<RegisterNewUserCommandResult>>, IRequiresStrongConnection, IRequiresAnyConnection
+public sealed record class RegisterNewUserCommand : IRequest<GenericResult<RegisterNewUserCommandResult>>, IRequiresStrongConnection, IRequiresAnyConnection
 {
     public string Email { get; }
 

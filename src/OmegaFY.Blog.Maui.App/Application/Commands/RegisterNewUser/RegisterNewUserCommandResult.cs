@@ -1,6 +1,6 @@
 ﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
 
-public class RegisterNewUserCommandResult
+public sealed record class RegisterNewUserCommandResult
 {
     public Guid UserId { get; set; }
 
