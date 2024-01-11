@@ -37,4 +37,11 @@ public partial class LoginPageViewModel : BaseViewModel
         //Trocar para view de registro.
         return Task.CompletedTask;
     }
+
+    [RelayCommand]
+    public Task ForgotPasswordAsync()
+    {
+        //Trocar para view de esqueci a senha.
+        return Task.CompletedTask;
+    }
 }
