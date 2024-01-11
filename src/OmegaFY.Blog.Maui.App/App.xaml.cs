@@ -1,4 +1,6 @@
-﻿namespace OmegaFY.Blog.Maui.App;
+﻿using OmegaFY.Blog.Maui.App.Infra.Extensions;
+
+namespace OmegaFY.Blog.Maui.App;
 
 public partial class App : Microsoft.Maui.Controls.Application
 {
@@ -23,12 +25,8 @@ public partial class App : Microsoft.Maui.Controls.Application
     {
         Window window = sender as Window;
 
-        window.Width = 360;
-        window.Height = 720;
+        window.ChangeWindowSize(360, 720);
 
-        DisplayInfo displayInfo = DeviceDisplay.Current.MainDisplayInfo;
-
-        window.X = (displayInfo.Width / displayInfo.Density - window.Width) / 2;
-        window.Y = (displayInfo.Height / displayInfo.Density - window.Height) / 2;
+        window.CenterWindow(DeviceDisplay.Current.MainDisplayInfo);
     }
 }
