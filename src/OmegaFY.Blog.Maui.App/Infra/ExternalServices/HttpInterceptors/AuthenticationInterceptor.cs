@@ -1,5 +1,6 @@
 ﻿using OmegaFY.Blog.Maui.App.Application.Base;
 using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Constants;
 using OmegaFY.Blog.Maui.App.Services;
 using System.Net;
 using System.Net.Http.Headers;
@@ -17,12 +18,12 @@ internal class AuthenticationInterceptor : DelegatingHandler
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        string bearerToken = _loggedUserService.TryGetUserBearerToken();
+        string bearerToken = await _loggedUserService.TryGetUserBearerTokenAsync();
 
         if (bearerToken is null)
             return await base.SendAsync(request, cancellationToken);
 
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+        request.Headers.Authorization = new AuthenticationHeaderValue(HttpHeaderContants.BEARER_AUTHENTICATION, bearerToken);
 
         HttpResponseMessage originalHttpResponse = await base.SendAsync(request, cancellationToken);
 
@@ -40,7 +41,7 @@ internal class AuthenticationInterceptor : DelegatingHandler
         if (!refreshTokenResult.Succeeded)
             return originalHttpResponse;
 
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+        request.Headers.Authorization = new AuthenticationHeaderValue(HttpHeaderContants.BEARER_AUTHENTICATION, refreshTokenResult.Data.Token);
 
         return await base.SendAsync(request, cancellationToken);
     }

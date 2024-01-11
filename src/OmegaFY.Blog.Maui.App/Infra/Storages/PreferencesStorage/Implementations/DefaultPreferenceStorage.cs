@@ -11,20 +11,20 @@ internal class DefaultPreferenceStorage : IUserPreferencesProvider
 
     public DefaultPreferenceStorage(IPreferences preferencesStorage) => _preferencesStorage = preferencesStorage;
 
-    public void ClearPreferences()
+    public void ClearAll()
     {
         _preferencesStorage.Clear();
         _preferencesCache.Clear();
     }
 
-    public bool ContainsPreference(PreferencesKey preference)
+    public bool Contains(PreferencesKey preference)
     {
         if (_preferencesCache.ContainsKey(preference)) return true;
 
         return _preferencesStorage.ContainsKey(preference.ToString());
     }
 
-    public T GetPreference<T>(PreferencesKey preference)
+    public T Get<T>(PreferencesKey preference)
     {
         if (_preferencesCache.TryGetValue(preference, out var value))
             return (T)value;
@@ -32,13 +32,13 @@ internal class DefaultPreferenceStorage : IUserPreferencesProvider
         return _preferencesStorage.Get<T>(preference.ToString(), default);
     }
 
-    public void RemovePreference(PreferencesKey preference)
+    public void Remove(PreferencesKey preference)
     {
         _preferencesStorage.Remove(preference.ToString());
         _preferencesCache.Remove(preference);
     }
 
-    public void SetPreference<T>(PreferencesKey preference, T value)
+    public void Set<T>(PreferencesKey preference, T value)
     {
         _preferencesStorage.Set(preference.ToString(), value);
         _preferencesCache.TryAdd(preference, value);

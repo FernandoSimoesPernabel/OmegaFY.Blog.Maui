@@ -4,13 +4,13 @@ namespace OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 
 public interface IUserPreferencesProvider
 {
-    public void ClearPreferences();
+    public void ClearAll();
 
-    public bool ContainsPreference(PreferencesKey preference);
+    public bool Contains(PreferencesKey preference);
 
-    public T GetPreference<T>(PreferencesKey preference);
+    public T Get<T>(PreferencesKey preference);
 
-    public void RemovePreference(PreferencesKey preference);
+    public void Remove(PreferencesKey preference);
 
-    public void SetPreference<T>(PreferencesKey preference, T value);
+    public void Set<T>(PreferencesKey preference, T value);
 }

@@ -22,8 +22,6 @@ internal class LoggedUserService : ILoggedUserService
 
     private readonly ISafeStorageProvider _safeStorageProvider;
 
-    //private readonly IUserRepository _repository;
-
     public LoggedUserService(IOmegaFyBlogClient omegaFyBlogClient, IUserPreferencesProvider userPreferencesProvider, ISafeStorageProvider safeStorageProvider)
     {
         _omegaFyBlogClient = omegaFyBlogClient;
@@ -39,6 +37,8 @@ internal class LoggedUserService : ILoggedUserService
     public async Task<GenericResult<LoginCommandResult>> LoginAsync(LoginCommand command)
     {
         ApiResponse<LoginCommandResult> result = await _omegaFyBlogClient.LoginAsync(command, CancellationToken.None);
+
+        SaveUserPreferencesIfSucceededAsync(result);
 
         await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data.Token, result.Data.RefreshToken);
 
@@ -65,7 +65,7 @@ internal class LoggedUserService : ILoggedUserService
         throw new NotImplementedException();
     }
 
-    public string TryGetUserBearerToken() => _userPreferencesProvider.GetPreference<string>(PreferencesKey.BearerToken);
+    public async Task<string> TryGetUserBearerTokenAsync() => await _safeStorageProvider.GetAsync<string>(SafeStorageKey.BearerToken);
 
     public async Task<Guid?> TryGetUserRefreshTokenAsync()
     {
@@ -81,15 +81,24 @@ internal class LoggedUserService : ILoggedUserService
             ClearUserTokenOnStorage();
     }
 
+    private void SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginCommandResult> result)
+    {
+        if (result.Failed) return;
+
+        _userPreferencesProvider.Set(PreferencesKey.UserId, result.Data.UserId);
+        _userPreferencesProvider.Set(PreferencesKey.DisplayName, result.Data.DisplayName);
+        _userPreferencesProvider.Set(PreferencesKey.Email, result.Data.Email);
+    }
+
     private async Task SaveUserTokenOnStorageAsync(string bearerToken, Guid refreshToken)
     {
-        _userPreferencesProvider.SetPreference(PreferencesKey.BearerToken, bearerToken);
+        await _safeStorageProvider.SetAsync(SafeStorageKey.BearerToken, bearerToken);
         await _safeStorageProvider.SetAsync(SafeStorageKey.RefreshToken, refreshToken);
     }
 
     private void ClearUserTokenOnStorage()
     {
-        _userPreferencesProvider.RemovePreference(PreferencesKey.BearerToken);
+        _safeStorageProvider.Remove(SafeStorageKey.BearerToken);
         _safeStorageProvider.Remove(SafeStorageKey.RefreshToken);
     }
 }

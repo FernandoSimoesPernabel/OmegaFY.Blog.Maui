@@ -19,7 +19,7 @@ public interface ILoggedUserService
 
     public Task<GenericResult<RegisterNewUserCommandResult>> RegisterNewUserAsync(RegisterNewUserCommand command);
 
-    public string TryGetUserBearerToken();
+    public Task<string> TryGetUserBearerTokenAsync();
 
     public Task<Guid?> TryGetUserRefreshTokenAsync();
 }
