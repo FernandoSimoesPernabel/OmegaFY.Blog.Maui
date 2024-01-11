@@ -49,50 +49,6 @@
 
                     <Label Grid.Row="5" HorizontalOptions="CenterAndExpand" Text="or signin with" />
 
-                    <StackLayout Grid.Row="6" HorizontalOptions="CenterAndExpand" Orientation="Horizontal" Spacing="40">
-
-                        <Image Aspect="AspectFit" HeightRequest="30" WidthRequest="30">
-                            <Image.Source>
-                                <UriImageSource 
-                                    CachingEnabled="True" 
-                                    CacheValidity="30" 
-                                    Uri="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo626DNKJxdHM-VNRD0m7x_8Jim-r9kRalJQ">
-                                </UriImageSource>
-                            </Image.Source>
-                        </Image>
-
-                        <Image Aspect="AspectFit" HeightRequest="30" WidthRequest="30">
-                            <Image.Source>
-                                <UriImageSource 
-                                    CachingEnabled="True" 
-                                    CacheValidity="30" 
-                                    Uri="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnLfAn36-LTYNHjioWgvu-0KUTIDDrW5lX_g">
-                                </UriImageSource>
-                            </Image.Source>
-                        </Image>
-
-                        <Image Aspect="AspectFit" HeightRequest="30" WidthRequest="30">
-                            <Image.Source>
-                                <UriImageSource 
-                                    CachingEnabled="True" 
-                                    CacheValidity="30" 
-                                    Uri="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-icon-png-transparent-background-osteopathy-16.png">
-                                </UriImageSource>
-                            </Image.Source>
-                        </Image>
-
-                        <Image Aspect="AspectFit" HeightRequest="30" WidthRequest="30">
-                            <Image.Source>
-                                <UriImageSource 
-                                    CachingEnabled="True" 
-                                    CacheValidity="30" 
-                                    Uri="https://cdn-icons-png.flaticon.com/512/174/174857.png">
-                                </UriImageSource>
-                            </Image.Source>
-                        </Image>
-
-                    </StackLayout>
-
                     <Label Grid.Row="7" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" Text="Forget Password" />
 
                     <Label Grid.Row="8" Margin="0,-10,0,0" HorizontalOptions="CenterAndExpand" Text="Don't have an account? Sign up here" />
