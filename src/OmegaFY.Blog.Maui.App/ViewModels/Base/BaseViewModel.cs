@@ -15,8 +15,10 @@ public abstract partial class BaseViewModel : ObservableObject
 
     protected readonly IMediator _mediator;
 
-    protected BaseViewModel(IMediator mediator)
+    protected BaseViewModel(IMediator mediator, string viewTitle)
     {
         _mediator = mediator;
+     
+        ViewTitle = viewTitle;
     }
 }

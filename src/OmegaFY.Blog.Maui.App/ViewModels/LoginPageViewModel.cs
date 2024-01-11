@@ -18,34 +18,23 @@ public partial class LoginPageViewModel : BaseViewModel
 
     public bool EnableLoginButton => !string.IsNullOrWhiteSpace(UserEmail) && !string.IsNullOrWhiteSpace(Password);
 
-    public LoginPageViewModel(IMediator mediator) : base(mediator)
-    {
-        ViewTitle = "Main Page";
-    }
+    public LoginPageViewModel(IMediator mediator) : base(mediator, "Login Page") { }
 
     [RelayCommand]
     public async Task LoginAsync()
     {
-        LoginCommand command = new LoginCommand(UserEmail, Password);
-
-        GenericResult<LoginCommandResult> result = await _mediator.Send(command);
+        GenericResult<LoginCommandResult> result = await _mediator.Send(new LoginCommand(UserEmail, Password));
 
         if (result.Succeeded)
         {
-            //Proxima tela
+            //Trocar para view de meu dashboard.
         }
     }
 
     [RelayCommand]
-    public async Task RegisterNewUserAsync()
+    public Task RegisterNewUserAsync()
     {
-        RegisterNewUserCommand command = null;
-
-        GenericResult<RegisterNewUserCommandResult> result = await _mediator.Send(command);
-
-        if (result.Succeeded)
-        {
-            //Proxima tela
-        }
+        //Trocar para view de registro.
+        return Task.CompletedTask;
     }
 }
