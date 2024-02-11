@@ -6,7 +6,7 @@ public class ApiResponse<T>
 {
     public bool Succeeded { get; set; }
 
-    public bool Failed { get; set; }
+    public bool Failed => !Succeeded;
 
     public T Data { get; set; }
 

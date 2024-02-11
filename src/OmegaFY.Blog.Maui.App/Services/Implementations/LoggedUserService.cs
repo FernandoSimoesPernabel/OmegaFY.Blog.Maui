@@ -40,7 +40,7 @@ internal class LoggedUserService : ILoggedUserService
 
         SaveUserPreferencesIfSucceededAsync(result);
 
-        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data.Token, result.Data.RefreshToken);
+        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
         return result.ToGenericResult();
     }
@@ -55,7 +55,7 @@ internal class LoggedUserService : ILoggedUserService
     {
         ApiResponse<RefreshTokenCommandResult> result = await _omegaFyBlogClient.RefreshTokenAsync(command, CancellationToken.None);
 
-        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data.Token, result.Data.RefreshToken);
+        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
         return result.ToGenericResult();
     }
@@ -73,10 +73,10 @@ internal class LoggedUserService : ILoggedUserService
         return refreshToken is not null ? JsonStaticSerializer.Deserialize<Guid>(refreshToken) : null;
     }
 
-    private async Task SaveUserTokenIfSucceededAsync(bool succeeded, string bearerToken, Guid refreshToken)
+    private async Task SaveUserTokenIfSucceededAsync(bool succeeded, string bearerToken, Guid? refreshToken)
     {
         if (succeeded)
-            await SaveUserTokenOnStorageAsync(bearerToken, refreshToken);
+            await SaveUserTokenOnStorageAsync(bearerToken, refreshToken.Value);
         else
             ClearUserTokenOnStorage();
     }

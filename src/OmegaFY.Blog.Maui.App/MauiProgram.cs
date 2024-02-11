@@ -43,6 +43,8 @@ public static class MauiProgram
 
         builder.Services.AddDialog();
 
+        builder.Services.AddNavigation();
+
         builder.Services.AddServices();
 
         builder.Services.AddServiceBusMediatR();

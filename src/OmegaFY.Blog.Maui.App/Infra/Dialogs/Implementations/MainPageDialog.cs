@@ -1,5 +1,4 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.Dialogs;
-using OmegaFY.Blog.Maui.App.Infra.Models;
+﻿using OmegaFY.Blog.Maui.App.Infra.Models;
 
 namespace OmegaFY.Blog.Maui.App.Infra.Dialogs.Implementations;
 
@@ -26,7 +25,7 @@ internal class MainPageDialog : IDialogProvider
 
     public async Task<bool> DisplayAlertAsync(DisplayAlertOptions options, Func<Task<bool>> funcDisplayAlertDialog)
     {
-        var shouldDisplayAlertDialog = await funcDisplayAlertDialog();
+        bool shouldDisplayAlertDialog = await funcDisplayAlertDialog();
 
         while (shouldDisplayAlertDialog)
         {
@@ -41,7 +40,7 @@ internal class MainPageDialog : IDialogProvider
 
     public async Task<bool> DisplayAlertAsync(DisplayAlertOptions options, Func<bool> funcDisplayAlertDialog)
     {
-        var shouldDisplayAlertDialog = funcDisplayAlertDialog();
+        bool shouldDisplayAlertDialog = funcDisplayAlertDialog();
 
         while (shouldDisplayAlertDialog)
         {

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using OmegaFY.Blog.Maui.App.Application.Base;
 using OmegaFY.Blog.Maui.App.Application.Commands.Login;
+using OmegaFY.Blog.Maui.App.Infra.Navigation;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;
-using OmegaFY.Blog.Maui.App.Views;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels;
 
@@ -18,7 +18,7 @@ public partial class LoginPageViewModel : BaseViewModel
 
     public bool EnableLoginButton => !string.IsNullOrWhiteSpace(UserEmail) && !string.IsNullOrWhiteSpace(Password);
 
-    public LoginPageViewModel(IMediator mediator) : base(mediator, "Login") { }
+    public LoginPageViewModel(IMediator mediator, INavigationProvider navigationProvider) : base(mediator, navigationProvider, "Login Page") { }
 
     [RelayCommand]
     public async Task LoginAsync()
@@ -27,8 +27,11 @@ public partial class LoginPageViewModel : BaseViewModel
 
         if (result.Succeeded)
         {
-            await Shell.Current.GoToAsync(nameof(MyDashboardPage));
+            await _navigationProvider.GoToMyDashboardAsync(result.Data.UserId);
+            return;
         }
+
+        //Exibir modal de erro
     }
 
     [RelayCommand]

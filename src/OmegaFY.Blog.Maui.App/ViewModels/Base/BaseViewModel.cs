@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OmegaFY.Blog.Maui.App.Infra.Navigation;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels.Base;
 
@@ -15,10 +16,13 @@ public abstract partial class BaseViewModel : ObservableObject
 
     protected readonly IMediator _mediator;
 
-    protected BaseViewModel(IMediator mediator, string viewTitle)
+    protected readonly INavigationProvider _navigationProvider;
+
+    protected BaseViewModel(IMediator mediator, INavigationProvider navigationProvider, string viewTitle)
     {
         _mediator = mediator;
-     
+
         ViewTitle = viewTitle;
+        _navigationProvider = navigationProvider;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.Enums;
-using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 
 namespace OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage.Implementations;
 

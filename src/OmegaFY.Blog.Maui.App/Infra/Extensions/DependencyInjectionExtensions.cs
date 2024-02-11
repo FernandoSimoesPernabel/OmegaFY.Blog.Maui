@@ -5,6 +5,8 @@ using OmegaFY.Blog.Maui.App.Infra.Dialogs.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.HttpInterceptors;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Implementations;
+using OmegaFY.Blog.Maui.App.Infra.Navigation;
+using OmegaFY.Blog.Maui.App.Infra.Navigation.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storages.FileSystemStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.FileSystemStorage.Implementations;
 using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
@@ -78,6 +80,13 @@ public static class DependencyInjectionExtensions
     public static IServiceCollection AddDialog(this IServiceCollection services)
     {
         services.AddSingleton<IDialogProvider, MainPageDialog>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddNavigation(this IServiceCollection services)
+    {
+        services.AddSingleton<INavigationProvider, ShellNavigation>();
 
         return services;
     }
