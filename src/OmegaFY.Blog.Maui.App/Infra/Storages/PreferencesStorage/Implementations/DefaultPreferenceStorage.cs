@@ -40,7 +40,7 @@ internal class DefaultPreferenceStorage : IUserPreferencesProvider
 
     public void Set<T>(PreferencesKey preference, T value)
     {
-        _preferencesStorage.Set(preference.ToString(), value);
+        _preferencesStorage.Set(preference.ToString(), value.ToString());
         _preferencesCache.TryAdd(preference, value);
     }
 }

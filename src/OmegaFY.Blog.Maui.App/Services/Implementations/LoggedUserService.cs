@@ -65,7 +65,7 @@ internal class LoggedUserService : ILoggedUserService
         throw new NotImplementedException();
     }
 
-    public async Task<string> TryGetUserBearerTokenAsync() => await _safeStorageProvider.GetAsync<string>(SafeStorageKey.BearerToken);
+    public async Task<string> TryGetUserBearerTokenAsync() => await _safeStorageProvider.GetAsync(SafeStorageKey.BearerToken);
 
     public async Task<Guid?> TryGetUserRefreshTokenAsync()
     {

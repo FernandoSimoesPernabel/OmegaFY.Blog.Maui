@@ -9,6 +9,9 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<LoginPage>();
         services.AddSingleton<LoginPageViewModel>();
 
+        services.AddSingleton<MyDashboardPage>();
+        services.AddSingleton<MyDashboardViewModel>();
+
         return services;
     }
 }
