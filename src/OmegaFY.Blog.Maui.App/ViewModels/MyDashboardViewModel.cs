@@ -4,7 +4,7 @@ using OmegaFY.Blog.Maui.App.ViewModels.Base;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels;
 
-public sealed class MyDashboardViewModel : BaseViewModel, IQueryAttributable
+public partial class MyDashboardViewModel : BaseViewModel, IQueryAttributable
 {
     public Guid UserId { get; private set; }
 

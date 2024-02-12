@@ -12,6 +12,12 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<MyDashboardPage>();
         services.AddSingleton<MyDashboardViewModel>();
 
+        services.AddSingleton<RegisterNewUserPage>();
+        services.AddSingleton<RegisterNewUserViewModel>();
+
+        services.AddSingleton<ForgotPasswordPage>();
+        services.AddSingleton<ForgotPasswordViewModel>();
+
         return services;
     }
 }

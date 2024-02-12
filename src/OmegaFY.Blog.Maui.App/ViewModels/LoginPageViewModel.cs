@@ -18,7 +18,7 @@ public partial class LoginPageViewModel : BaseViewModel
 
     public bool EnableLoginButton => !string.IsNullOrWhiteSpace(UserEmail) && !string.IsNullOrWhiteSpace(Password);
 
-    public LoginPageViewModel(IMediator mediator, INavigationProvider navigationProvider) : base(mediator, navigationProvider, "Login Page") { }
+    public LoginPageViewModel(IMediator mediator, INavigationProvider navigationProvider) : base(mediator, navigationProvider, "Login") { }
 
     [RelayCommand]
     public async Task LoginAsync()
@@ -35,16 +35,8 @@ public partial class LoginPageViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public Task RegisterNewUserAsync()
-    {
-        //Trocar para view de registro.
-        return Task.CompletedTask;
-    }
+    public async Task RegisterNewUserAsync() => await _navigationProvider.GoToRegisterNewUserAsync(UserEmail);
 
     [RelayCommand]
-    public Task ForgotPasswordAsync()
-    {
-        //Trocar para view de esqueci a senha.
-        return Task.CompletedTask;
-    }
+    public async Task ForgotPasswordAsync() => await _navigationProvider.GoToForgotPasswordAsync(UserEmail);
 }
