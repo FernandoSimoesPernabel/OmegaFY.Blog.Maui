@@ -2,5 +2,8 @@
 
 public enum PreferencesKey
 {
-    DisplayName = 0
+    BearerToken = 0,
+    UserId = 1,
+    DisplayName = 2,
+    Email = 3
 }

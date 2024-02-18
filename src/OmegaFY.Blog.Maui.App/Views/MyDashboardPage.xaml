@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:viewmodel="clr-namespace:OmegaFY.Blog.Maui.App.ViewModels"
+             xmlns:views="clr-namespace:OmegaFY.Blog.Maui.App.Views"
+             x:DataType="viewmodel:MyDashboardViewModel"
+             Title="{Binding ViewTitle}"
+             x:Class="OmegaFY.Blog.Maui.App.Views.MyDashboardPage">
+
+    <!--<views:MostRecentPostsPage Title="Recent Posts" Icon--><!--ImageSource="home.svg"/>
+    <views:MostRecentCommentsPage Title="Recent Comments" />
+    <views:MostRecentSharesPage Title="Recent Shares" />-->
+</ContentPage>
