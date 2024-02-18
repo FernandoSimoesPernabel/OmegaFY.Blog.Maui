@@ -40,7 +40,8 @@ internal class LoggedUserService : ILoggedUserService
 
         SaveUserPreferencesIfSucceededAsync(result);
 
-        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
+        if (command.RememberMe)
+            await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
         return result.ToGenericResult();
     }
@@ -65,7 +66,11 @@ internal class LoggedUserService : ILoggedUserService
         throw new NotImplementedException();
     }
 
-    public async Task<string> TryGetUserBearerTokenAsync() => await _safeStorageProvider.GetAsync(SafeStorageKey.BearerToken);
+    public string TryGetUserBearerToken() => _userPreferencesProvider.Get<string>(PreferencesKey.BearerToken);
+
+    public string TryGetUserEmail() => _userPreferencesProvider.Get<string>(PreferencesKey.Email);
+
+    public async Task<string> TryGetUserPasswordAsync() => await _safeStorageProvider.GetAsync(SafeStorageKey.Password);
 
     public async Task<Guid?> TryGetUserRefreshTokenAsync()
     {
@@ -92,13 +97,13 @@ internal class LoggedUserService : ILoggedUserService
 
     private async Task SaveUserTokenOnStorageAsync(string bearerToken, Guid refreshToken)
     {
-        await _safeStorageProvider.SetAsync(SafeStorageKey.BearerToken, bearerToken);
+        _userPreferencesProvider.Set(PreferencesKey.BearerToken, bearerToken);
         await _safeStorageProvider.SetAsync(SafeStorageKey.RefreshToken, refreshToken);
     }
 
     private void ClearUserTokenOnStorage()
     {
-        _safeStorageProvider.Remove(SafeStorageKey.BearerToken);
+        _userPreferencesProvider.Remove(PreferencesKey.BearerToken);
         _safeStorageProvider.Remove(SafeStorageKey.RefreshToken);
     }
 }

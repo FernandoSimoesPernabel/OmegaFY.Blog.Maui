@@ -10,7 +10,7 @@ public partial class MyDashboardViewModel : BaseViewModel, IQueryAttributable
 
     public MyDashboardViewModel(IMediator mediator, INavigationProvider navigationProvider) : base(mediator, navigationProvider, "My Dashboard") { }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public override void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         UserId = (Guid)query["userId"];
     }

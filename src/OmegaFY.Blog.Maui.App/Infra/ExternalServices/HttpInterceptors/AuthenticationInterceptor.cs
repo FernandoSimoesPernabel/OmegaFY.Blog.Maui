@@ -11,14 +11,11 @@ internal class AuthenticationInterceptor : DelegatingHandler
 {
     private readonly ILoggedUserService _loggedUserService;
 
-    public AuthenticationInterceptor(ILoggedUserService loggedUserService)
-    {
-        _loggedUserService = loggedUserService;
-    }
+    public AuthenticationInterceptor(ILoggedUserService loggedUserService) => _loggedUserService = loggedUserService;
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        string bearerToken = await _loggedUserService.TryGetUserBearerTokenAsync();
+        string bearerToken = _loggedUserService.TryGetUserBearerToken();
 
         if (bearerToken is null)
             return await base.SendAsync(request, cancellationToken);

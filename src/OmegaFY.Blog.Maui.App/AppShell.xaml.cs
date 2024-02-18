@@ -12,5 +12,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(MyDashboardPage), typeof(MyDashboardPage));
         Routing.RegisterRoute(nameof(RegisterNewUserPage), typeof(RegisterNewUserPage));
         Routing.RegisterRoute(nameof(ForgotPasswordPage), typeof(ForgotPasswordPage));
+        Routing.RegisterRoute(nameof(MostRecentCommentsPage), typeof(MostRecentCommentsPage));
+        Routing.RegisterRoute(nameof(MostRecentPostsPage), typeof(MostRecentPostsPage));
+        Routing.RegisterRoute(nameof(MostRecentSharesPage), typeof(MostRecentSharesPage));
     }
 }

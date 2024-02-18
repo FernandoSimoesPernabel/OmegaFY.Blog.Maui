@@ -11,7 +11,7 @@ public partial class ForgotPasswordViewModel : BaseViewModel, IQueryAttributable
 
     public ForgotPasswordViewModel(IMediator mediator, INavigationProvider navigationProvider) : base(mediator, navigationProvider, "Forgot Password") { }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public override void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         UserEmail = (string)query["userEmail"];
     }

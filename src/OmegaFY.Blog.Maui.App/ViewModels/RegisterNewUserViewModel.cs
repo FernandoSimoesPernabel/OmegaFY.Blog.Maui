@@ -11,7 +11,7 @@ public partial class RegisterNewUserViewModel : BaseViewModel, IQueryAttributabl
 
     public RegisterNewUserViewModel(IMediator mediator, INavigationProvider navigationProvider) : base(mediator, navigationProvider, "Register New User") { }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public override void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         UserEmail = (string)query["userEmail"];
     }

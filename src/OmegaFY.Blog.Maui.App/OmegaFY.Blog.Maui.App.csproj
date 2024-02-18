@@ -108,6 +108,15 @@
     <MauiXaml Update="Views\ForgotPasswordPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\MostRecentCommentsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\MostRecentPostsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\MostRecentSharesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\MyDashboardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

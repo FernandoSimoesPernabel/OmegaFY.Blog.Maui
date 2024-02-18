@@ -18,6 +18,15 @@ public static class DependencyInjectionExtensions
         services.AddSingleton<ForgotPasswordPage>();
         services.AddSingleton<ForgotPasswordViewModel>();
 
+        services.AddTransient<MostRecentCommentsPage>();
+        services.AddTransient<MostRecentCommentsViewModel>();
+
+        services.AddTransient<MostRecentPostsPage>();
+        services.AddTransient<MostRecentPostsViewModel>();
+
+        services.AddTransient<MostRecentSharesPage>();
+        services.AddTransient<MostRecentSharesViewModel>();
+
         return services;
     }
 }

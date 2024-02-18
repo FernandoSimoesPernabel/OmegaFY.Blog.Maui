@@ -9,9 +9,12 @@ public sealed record class LoginCommand : IRequest<GenericResult<LoginCommandRes
 
     public string Password { get; }
 
-    public LoginCommand(string email, string password)
+    public bool RememberMe { get; }
+
+    public LoginCommand(string email, string password, bool rememberMe)
     {
         Email = email;
         Password = password;
+        RememberMe = rememberMe;
     }
 }

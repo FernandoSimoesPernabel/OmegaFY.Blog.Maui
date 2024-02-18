@@ -3,7 +3,7 @@ using OmegaFY.Blog.Maui.App.Infra.Navigation;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels.Base;
 
-public abstract partial class BaseViewModel : ObservableObject
+public abstract partial class BaseViewModel : ObservableObject, IQueryAttributable
 {
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotBusy))]
@@ -20,9 +20,22 @@ public abstract partial class BaseViewModel : ObservableObject
 
     protected BaseViewModel(IMediator mediator, INavigationProvider navigationProvider, string viewTitle)
     {
-        _mediator = mediator;
-
         ViewTitle = viewTitle;
+
+        _mediator = mediator;
         _navigationProvider = navigationProvider;
     }
+
+    public virtual void ApplyQueryAttributes(IDictionary<string, object> query) { }
+
+    public virtual async Task InitializeAsync()
+    {
+        IsBusy = true;
+
+        await InternalInitializeAsync();
+
+        IsBusy = false;
+    }
+
+    protected virtual Task InternalInitializeAsync() => Task.CompletedTask;
 }
