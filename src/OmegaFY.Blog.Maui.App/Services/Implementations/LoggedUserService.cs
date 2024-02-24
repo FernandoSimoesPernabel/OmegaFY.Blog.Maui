@@ -11,6 +11,7 @@ using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 using OmegaFY.Blog.Maui.App.Infra.Enums;
 using OmegaFY.Blog.Maui.App.Common.Serializers;
+using Microsoft.Maui.Controls;
 
 namespace OmegaFY.Blog.Maui.App.Services.Implementations;
 
@@ -38,10 +39,10 @@ internal class LoggedUserService : ILoggedUserService
     {
         ApiResponse<LoginCommandResult> result = await _omegaFyBlogClient.LoginAsync(command, CancellationToken.None);
 
-        SaveUserPreferencesIfSucceededAsync(result);
+        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
         if (command.RememberMe)
-            await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
+            await SaveUserPreferencesIfSucceededAsync(result, command.Password);
 
         return result.ToGenericResult();
     }
@@ -86,13 +87,15 @@ internal class LoggedUserService : ILoggedUserService
             ClearUserTokenOnStorage();
     }
 
-    private void SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginCommandResult> result)
+    private async Task SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginCommandResult> result, string password)
     {
         if (result.Failed) return;
 
         _userPreferencesProvider.Set(PreferencesKey.UserId, result.Data.UserId);
         _userPreferencesProvider.Set(PreferencesKey.DisplayName, result.Data.DisplayName);
         _userPreferencesProvider.Set(PreferencesKey.Email, result.Data.Email);
+
+        await _safeStorageProvider.SetAsync(SafeStorageKey.Password, password);
     }
 
     private async Task SaveUserTokenOnStorageAsync(string bearerToken, Guid refreshToken)

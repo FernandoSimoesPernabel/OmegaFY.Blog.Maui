@@ -19,6 +19,9 @@ public partial class LoginPageViewModel : BaseViewModel
     [NotifyPropertyChangedFor(nameof(EnableLoginButton))]
     private string password;
 
+    [ObservableProperty]
+    private bool rememberMe;
+
     public bool EnableLoginButton => !string.IsNullOrWhiteSpace(UserEmail) && !string.IsNullOrWhiteSpace(Password);
 
     public LoginPageViewModel(IMediator mediator, INavigationProvider navigationProvider, ILoggedUserService loggedUserService)
@@ -30,7 +33,7 @@ public partial class LoginPageViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoginAsync()
     {
-        GenericResult<LoginCommandResult> result = await _mediator.Send(new LoginCommand(UserEmail, Password, true));
+        GenericResult<LoginCommandResult> result = await _mediator.Send(new LoginCommand(UserEmail, Password, RememberMe));
 
         if (result.Succeeded)
         {
@@ -50,8 +53,6 @@ public partial class LoginPageViewModel : BaseViewModel
     protected override async Task InternalInitializeAsync()
     {
         string bearerToken = _loggedUserService.TryGetUserBearerToken();
-
-        //TODO Validar conteudo do token
 
         if (!string.IsNullOrWhiteSpace(bearerToken))
         {
