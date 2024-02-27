@@ -1,6 +1,8 @@
 ﻿using OmegaFY.Blog.Maui.App.Application.Base;
 using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
+using OmegaFY.Blog.Maui.App.Infra.Dialogs;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Constants;
+using OmegaFY.Blog.Maui.App.Infra.Models;
 using OmegaFY.Blog.Maui.App.Services;
 using System.Net;
 using System.Net.Http.Headers;
@@ -11,7 +13,13 @@ internal class AuthenticationInterceptor : DelegatingHandler
 {
     private readonly ILoggedUserService _loggedUserService;
 
-    public AuthenticationInterceptor(ILoggedUserService loggedUserService) => _loggedUserService = loggedUserService;
+    private readonly IDialogProvider _dialogProvider;
+
+    public AuthenticationInterceptor(ILoggedUserService loggedUserService, IDialogProvider dialogProvider)
+    {
+        _loggedUserService = loggedUserService;
+        _dialogProvider = dialogProvider;
+    }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
@@ -36,7 +44,13 @@ internal class AuthenticationInterceptor : DelegatingHandler
             await _loggedUserService.RefreshTokenAsync(new RefreshTokenCommand(bearerToken, refreshToken.Value));
 
         if (!refreshTokenResult.Succeeded)
+        {
+            await _loggedUserService.LogoffLocallyAsync();
+
+            await _dialogProvider.DisplayAlertAsync(new DisplayAlertOptions("Unauthorized Access", "Unable to authenticate your session!"));
+            
             return originalHttpResponse;
+        }
 
         request.Headers.Authorization = new AuthenticationHeaderValue(HttpHeaderContants.BEARER_AUTHENTICATION, refreshTokenResult.Data.Token);
 

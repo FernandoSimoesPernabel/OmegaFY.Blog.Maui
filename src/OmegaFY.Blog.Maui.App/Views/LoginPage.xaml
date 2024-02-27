@@ -39,15 +39,20 @@
 
                     <Label Grid.Row="1" Margin="0,-15,0,0" HorizontalOptions="CenterAndExpand" Text="Login in to account" TextColor="#1C375C" />
 
-                    <Entry Grid.Row="2" Margin="0,20,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" Text="{Binding UserEmail, Mode=OneWayToSource}" VerticalOptions="FillAndExpand" />
+                    <Entry Grid.Row="2" Margin="0,20,0,0" HorizontalOptions="FillAndExpand" Placeholder="Email" Text="{Binding UserEmail, Mode=TwoWay}" VerticalOptions="FillAndExpand" />
 
-                    <Entry Grid.Row="3" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" Text="{Binding Password, Mode=OneWayToSource}" VerticalOptions="FillAndExpand" />
+                    <Entry Grid.Row="3" HorizontalOptions="FillAndExpand" IsPassword="True" Placeholder="Password" Text="{Binding Password, Mode=TwoWay}" VerticalOptions="FillAndExpand" />
 
-                    <Button Grid.Row="4" BackgroundColor="#1C375C" IsEnabled="{Binding EnableLoginButton, Mode=OneWay}" Command="{Binding LoginCommand}" CornerRadius="20" Text="Login" />
+                    <StackLayout HorizontalOptions="Start" Grid.Row="4" Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding RememberMe, Mode=OneWayToSource}" Color="#1C375C" />
+                        <Label VerticalTextAlignment="Center" Text="Remember Me" />
+                    </StackLayout>
 
-                    <Button Grid.Row="5" BackgroundColor="#1C375C" Command="{Binding RegisterNewUserCommand, Mode=OneWay}" CornerRadius="20" Text="Register using Email" />
+                    <Button Grid.Row="5" BackgroundColor="#1C375C" IsEnabled="{Binding EnableLoginButton, Mode=OneWay}" Command="{Binding LoginCommand}" CornerRadius="20" Text="Login" />
 
-                    <Label Grid.Row="7" Margin="0,-10,0,0" HorizontalOptions="CenterAndExpand" >
+                    <Button Grid.Row="6" BackgroundColor="#1C375C" Command="{Binding RegisterNewUserCommand, Mode=OneWay}" CornerRadius="20" Text="Register using Email" />
+
+                    <Label Grid.Row="8" Margin="0,-10,0,0" HorizontalOptions="CenterAndExpand" >
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ForgotPasswordCommand, Mode=OneWay}" />
                         </Label.GestureRecognizers>

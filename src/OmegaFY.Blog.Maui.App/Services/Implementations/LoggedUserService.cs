@@ -11,6 +11,7 @@ using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 using OmegaFY.Blog.Maui.App.Infra.Enums;
 using OmegaFY.Blog.Maui.App.Common.Serializers;
+using OmegaFY.Blog.Maui.App.Infra.Navigation;
 
 namespace OmegaFY.Blog.Maui.App.Services.Implementations;
 
@@ -22,11 +23,18 @@ internal class LoggedUserService : ILoggedUserService
 
     private readonly ISafeStorageProvider _safeStorageProvider;
 
-    public LoggedUserService(IOmegaFyBlogClient omegaFyBlogClient, IUserPreferencesProvider userPreferencesProvider, ISafeStorageProvider safeStorageProvider)
+    private readonly INavigationProvider _navigationProvider;
+
+    public LoggedUserService(
+        IOmegaFyBlogClient omegaFyBlogClient,
+        IUserPreferencesProvider userPreferencesProvider,
+        ISafeStorageProvider safeStorageProvider,
+        INavigationProvider navigationProvider)
     {
         _omegaFyBlogClient = omegaFyBlogClient;
         _userPreferencesProvider = userPreferencesProvider;
         _safeStorageProvider = safeStorageProvider;
+        _navigationProvider = navigationProvider;
     }
 
     public Task<GenericResult<ExcludeAccountCommandResult>> ExcludeAccountAsync(ExcludeAccountCommand command)
@@ -38,15 +46,21 @@ internal class LoggedUserService : ILoggedUserService
     {
         ApiResponse<LoginCommandResult> result = await _omegaFyBlogClient.LoginAsync(command, CancellationToken.None);
 
-        SaveUserPreferencesIfSucceededAsync(result);
+        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
         if (command.RememberMe)
-            await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
+            await SaveUserPreferencesIfSucceededAsync(result, command.Password);
 
         return result.ToGenericResult();
     }
 
-    public Task<GenericResult<LogoffCommandResult>> LogoffAsync(LogoffCommand command)
+    public async Task LogoffLocallyAsync()
+    {
+        ClearUserTokenOnStorage();
+        await _navigationProvider.GoToLoginAsync();
+    }
+
+    public Task<GenericResult<LogoffCommandResult>> LogoffFromServerAsync(LogoffCommand command)
     {
         ClearUserTokenOnStorage();
         throw new NotImplementedException();
@@ -75,7 +89,7 @@ internal class LoggedUserService : ILoggedUserService
     public async Task<Guid?> TryGetUserRefreshTokenAsync()
     {
         string refreshToken = await _safeStorageProvider.GetAsync(SafeStorageKey.RefreshToken);
-        return refreshToken is not null ? JsonStaticSerializer.Deserialize<Guid>(refreshToken) : null;
+        return refreshToken is not null ? new Guid(refreshToken) : null;
     }
 
     private async Task SaveUserTokenIfSucceededAsync(bool succeeded, string bearerToken, Guid? refreshToken)
@@ -86,19 +100,21 @@ internal class LoggedUserService : ILoggedUserService
             ClearUserTokenOnStorage();
     }
 
-    private void SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginCommandResult> result)
+    private async Task SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginCommandResult> result, string password)
     {
         if (result.Failed) return;
 
         _userPreferencesProvider.Set(PreferencesKey.UserId, result.Data.UserId);
         _userPreferencesProvider.Set(PreferencesKey.DisplayName, result.Data.DisplayName);
         _userPreferencesProvider.Set(PreferencesKey.Email, result.Data.Email);
+
+        await _safeStorageProvider.SetAsync(SafeStorageKey.Password, password);
     }
 
     private async Task SaveUserTokenOnStorageAsync(string bearerToken, Guid refreshToken)
     {
         _userPreferencesProvider.Set(PreferencesKey.BearerToken, bearerToken);
-        await _safeStorageProvider.SetAsync(SafeStorageKey.RefreshToken, refreshToken);
+        await _safeStorageProvider.SetAsync(SafeStorageKey.RefreshToken, refreshToken.ToString());
     }
 
     private void ClearUserTokenOnStorage()
