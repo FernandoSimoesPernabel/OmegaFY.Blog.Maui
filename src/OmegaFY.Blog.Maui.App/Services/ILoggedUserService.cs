@@ -13,7 +13,9 @@ public interface ILoggedUserService
 
     public Task<GenericResult<LoginCommandResult>> LoginAsync(LoginCommand command);
 
-    public Task<GenericResult<LogoffCommandResult>> LogoffAsync(LogoffCommand command);
+    public Task LogoffLocallyAsync();
+
+    public Task<GenericResult<LogoffCommandResult>> LogoffFromServerAsync(LogoffCommand command);
 
     public Task<GenericResult<RefreshTokenCommandResult>> RefreshTokenAsync(RefreshTokenCommand command);
 
