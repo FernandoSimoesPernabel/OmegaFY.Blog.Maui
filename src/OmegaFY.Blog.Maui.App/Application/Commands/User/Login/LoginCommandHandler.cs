@@ -2,7 +2,7 @@
 using OmegaFY.Blog.Maui.App.Application.Base;
 using OmegaFY.Blog.Maui.App.Services;
 
-namespace OmegaFY.Blog.Maui.App.Application.Commands.Login;
+namespace OmegaFY.Blog.Maui.App.Application.Commands.User.Login;
 
 internal class LoginCommandHandler : IRequestHandler<LoginCommand, GenericResult<LoginCommandResult>>
 {

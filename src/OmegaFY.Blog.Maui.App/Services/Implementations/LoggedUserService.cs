@@ -1,10 +1,5 @@
 ﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.ExcludeAccount;
-using OmegaFY.Blog.Maui.App.Application.Commands.Login;
-using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
-using OmegaFY.Blog.Maui.App.Application.Commands.Logoff;
-using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
 using OmegaFY.Blog.Maui.App.Application.Base;
 using OmegaFY.Blog.Maui.App.Application.Extensions;
 using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
@@ -12,6 +7,11 @@ using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 using OmegaFY.Blog.Maui.App.Infra.Enums;
 using OmegaFY.Blog.Maui.App.Common.Serializers;
 using OmegaFY.Blog.Maui.App.Infra.Navigation;
+using OmegaFY.Blog.Maui.App.Application.Commands.User.ExcludeAccount;
+using OmegaFY.Blog.Maui.App.Application.Commands.User.Login;
+using OmegaFY.Blog.Maui.App.Application.Commands.User.Logoff;
+using OmegaFY.Blog.Maui.App.Application.Commands.User.RefreshToken;
+using OmegaFY.Blog.Maui.App.Application.Commands.User.RegisterNewUser;
 
 namespace OmegaFY.Blog.Maui.App.Services.Implementations;
 

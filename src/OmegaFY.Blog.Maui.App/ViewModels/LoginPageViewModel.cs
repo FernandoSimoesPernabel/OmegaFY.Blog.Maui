@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.Login;
+using OmegaFY.Blog.Maui.App.Application.Commands.User.Login;
 using OmegaFY.Blog.Maui.App.Infra.Navigation;
 using OmegaFY.Blog.Maui.App.Services;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;

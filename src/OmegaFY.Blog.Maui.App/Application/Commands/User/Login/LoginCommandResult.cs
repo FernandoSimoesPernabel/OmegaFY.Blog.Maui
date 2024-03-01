@@ -1,4 +1,4 @@
-﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Login;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.User.Login;
 
 public sealed record class LoginCommandResult
 {

@@ -1,5 +1,5 @@
 ﻿using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
+using OmegaFY.Blog.Maui.App.Application.Commands.User.RefreshToken;
 using OmegaFY.Blog.Maui.App.Infra.Dialogs;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Constants;
 using OmegaFY.Blog.Maui.App.Infra.Models;

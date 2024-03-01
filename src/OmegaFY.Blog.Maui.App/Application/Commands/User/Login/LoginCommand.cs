@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using OmegaFY.Blog.Maui.App.Application.Base;
 
-namespace OmegaFY.Blog.Maui.App.Application.Commands.Login;
+namespace OmegaFY.Blog.Maui.App.Application.Commands.User.Login;
 
 public sealed record class LoginCommand : IRequest<GenericResult<LoginCommandResult>>, IRequiresStrongConnection, IRequiresAnyConnection
 {
