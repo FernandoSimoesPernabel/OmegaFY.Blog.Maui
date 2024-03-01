@@ -1,4 +1,4 @@
-﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.User.RegisterNewUser;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Users.RegisterNewUser;
 
 public sealed record class RegisterNewUserCommandResult
 {

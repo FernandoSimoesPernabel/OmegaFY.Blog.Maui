@@ -1,23 +1,20 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
-using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Base;
-using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Extensions;
+﻿using OmegaFY.Blog.Maui.App.Application.Base;
 using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 using OmegaFY.Blog.Maui.App.Infra.Enums;
-using OmegaFY.Blog.Maui.App.Common.Serializers;
 using OmegaFY.Blog.Maui.App.Infra.Navigation;
-using OmegaFY.Blog.Maui.App.Application.Commands.User.ExcludeAccount;
-using OmegaFY.Blog.Maui.App.Application.Commands.User.Login;
-using OmegaFY.Blog.Maui.App.Application.Commands.User.Logoff;
-using OmegaFY.Blog.Maui.App.Application.Commands.User.RefreshToken;
-using OmegaFY.Blog.Maui.App.Application.Commands.User.RegisterNewUser;
+using OmegaFY.Blog.Maui.App.Application.Commands.Users.ExcludeAccount;
+using OmegaFY.Blog.Maui.App.Application.Commands.Users.Login;
+using OmegaFY.Blog.Maui.App.Application.Commands.Users.Logoff;
+using OmegaFY.Blog.Maui.App.Application.Commands.Users.RefreshToken;
+using OmegaFY.Blog.Maui.App.Application.Commands.Users.RegisterNewUser;
+using MediatR;
 
 namespace OmegaFY.Blog.Maui.App.Services.Implementations;
 
 internal class LoggedUserService : ILoggedUserService
 {
-    private readonly IOmegaFyBlogClient _omegaFyBlogClient;
+    private readonly IMediator _mediator;
 
     private readonly IUserPreferencesProvider _userPreferencesProvider;
 
@@ -26,32 +23,37 @@ internal class LoggedUserService : ILoggedUserService
     private readonly INavigationProvider _navigationProvider;
 
     public LoggedUserService(
-        IOmegaFyBlogClient omegaFyBlogClient,
-        IUserPreferencesProvider userPreferencesProvider,
-        ISafeStorageProvider safeStorageProvider,
+        IMediator mediator, 
+        IUserPreferencesProvider userPreferencesProvider, 
+        ISafeStorageProvider safeStorageProvider, 
         INavigationProvider navigationProvider)
     {
-        _omegaFyBlogClient = omegaFyBlogClient;
+        _mediator = mediator;
         _userPreferencesProvider = userPreferencesProvider;
         _safeStorageProvider = safeStorageProvider;
         _navigationProvider = navigationProvider;
     }
 
-    public Task<GenericResult<ExcludeAccountCommandResult>> ExcludeAccountAsync(ExcludeAccountCommand command)
+    public async Task<GenericResult<ExcludeAccountCommandResult>> ExcludeAccountAsync(ExcludeAccountCommand command)
     {
-        throw new NotImplementedException();
+        GenericResult<ExcludeAccountCommandResult> result = await _mediator.Send(command);
+
+        if (result.Succeeded)
+            ClearUserTokenOnStorage();
+
+        return result;
     }
 
     public async Task<GenericResult<LoginCommandResult>> LoginAsync(LoginCommand command)
     {
-        ApiResponse<LoginCommandResult> result = await _omegaFyBlogClient.LoginAsync(command, CancellationToken.None);
+        GenericResult<LoginCommandResult> result = await _mediator.Send(command);
 
         await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
         if (command.RememberMe)
             await SaveUserPreferencesIfSucceededAsync(result, command.Password);
 
-        return result.ToGenericResult();
+        return result;
     }
 
     public async Task LogoffLocallyAsync()
@@ -60,24 +62,28 @@ internal class LoggedUserService : ILoggedUserService
         await _navigationProvider.GoToLoginAsync();
     }
 
-    public Task<GenericResult<LogoffCommandResult>> LogoffFromServerAsync(LogoffCommand command)
+    public async Task<GenericResult<LogoffCommandResult>> LogoffFromServerAsync(LogoffCommand command)
     {
         ClearUserTokenOnStorage();
-        throw new NotImplementedException();
+        return await _mediator.Send(command);
     }
 
     public async Task<GenericResult<RefreshTokenCommandResult>> RefreshTokenAsync(RefreshTokenCommand command)
     {
-        ApiResponse<RefreshTokenCommandResult> result = await _omegaFyBlogClient.RefreshTokenAsync(command, CancellationToken.None);
+        GenericResult<RefreshTokenCommandResult> result = await _mediator.Send(command);
 
         await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
-        return result.ToGenericResult();
+        return result;
     }
 
-    public Task<GenericResult<RegisterNewUserCommandResult>> RegisterNewUserAsync(RegisterNewUserCommand command)
+    public async Task<GenericResult<RegisterNewUserCommandResult>> RegisterNewUserAsync(RegisterNewUserCommand command)
     {
-        throw new NotImplementedException();
+        GenericResult<RegisterNewUserCommandResult> result = await _mediator.Send(command);
+
+        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
+
+        return result;
     }
 
     public string TryGetUserBearerToken() => _userPreferencesProvider.Get<string>(PreferencesKey.BearerToken);
@@ -100,7 +106,7 @@ internal class LoggedUserService : ILoggedUserService
             ClearUserTokenOnStorage();
     }
 
-    private async Task SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginCommandResult> result, string password)
+    private async Task SaveUserPreferencesIfSucceededAsync(GenericResult<LoginCommandResult> result, string password)
     {
         if (result.Failed) return;
 

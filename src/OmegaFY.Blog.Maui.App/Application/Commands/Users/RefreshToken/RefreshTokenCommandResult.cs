@@ -1,4 +1,4 @@
-﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.User.RefreshToken;
+﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Users.RefreshToken;
 
 public sealed record class RefreshTokenCommandResult
 {

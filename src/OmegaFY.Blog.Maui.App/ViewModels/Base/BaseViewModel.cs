@@ -14,15 +14,12 @@ public abstract partial class BaseViewModel : ObservableObject, IQueryAttributab
 
     public bool IsNotBusy => !IsBusy;
 
-    protected readonly IMediator _mediator;
-
     protected readonly INavigationProvider _navigationProvider;
 
-    protected BaseViewModel(IMediator mediator, INavigationProvider navigationProvider, string viewTitle)
+    protected BaseViewModel(INavigationProvider navigationProvider, string viewTitle)
     {
         ViewTitle = viewTitle;
 
-        _mediator = mediator;
         _navigationProvider = navigationProvider;
     }
 
