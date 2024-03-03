@@ -1,6 +1,6 @@
-﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Users.RefreshToken;
+﻿namespace OmegaFY.Blog.Maui.App.Models.APIs.Results;
 
-public sealed record class RefreshTokenCommandResult
+public sealed record class RefreshTokenResult
 {
     public string Token { get; set; }
 

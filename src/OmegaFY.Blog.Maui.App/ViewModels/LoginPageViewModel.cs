@@ -1,6 +1,7 @@
-﻿using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.Users.Login;
-using OmegaFY.Blog.Maui.App.Infra.Navigation;
+﻿using OmegaFY.Blog.Maui.App.Infra.Navigation;
+using OmegaFY.Blog.Maui.App.Models.APIs.Base;
+using OmegaFY.Blog.Maui.App.Models.APIs.Requests;
+using OmegaFY.Blog.Maui.App.Models.APIs.Results;
 using OmegaFY.Blog.Maui.App.Services;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;
 
@@ -31,7 +32,7 @@ public partial class LoginPageViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoginAsync()
     {
-        GenericResult<LoginCommandResult> result = await _loggedUserService.LoginAsync(new LoginCommand(UserEmail, Password, RememberMe));
+        GenericResult<LoginResult> result = await _loggedUserService.LoginAsync(new LoginRequest(UserEmail, Password, RememberMe), _cancellationToken);
 
         if (result.Succeeded)
         {

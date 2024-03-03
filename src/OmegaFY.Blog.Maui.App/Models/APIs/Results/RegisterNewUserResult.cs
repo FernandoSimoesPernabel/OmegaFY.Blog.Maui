@@ -1,6 +1,6 @@
-﻿namespace OmegaFY.Blog.Maui.App.Application.Commands.Users.RegisterNewUser;
+﻿namespace OmegaFY.Blog.Maui.App.Models.APIs.Results;
 
-public sealed record class RegisterNewUserCommandResult
+public sealed record class RegisterNewUserResult
 {
     public Guid UserId { get; set; }
 
@@ -12,9 +12,9 @@ public sealed record class RegisterNewUserCommandResult
 
     public DateTime RefreshTokenExpirationDate { get; set; }
 
-    public RegisterNewUserCommandResult() { }
+    public RegisterNewUserResult() { }
 
-    public RegisterNewUserCommandResult(Guid userId, string token, DateTime tokenExpirationDate, Guid refreshToken, DateTime refreshTokenExpirationDate)
+    public RegisterNewUserResult(Guid userId, string token, DateTime tokenExpirationDate, Guid refreshToken, DateTime refreshTokenExpirationDate)
     {
         UserId = userId;
         Token = token;

@@ -1,7 +1,7 @@
 ﻿using OmegaFY.Blog.Maui.App.Common.Extensions;
 using OmegaFY.Blog.Maui.App.Common.Models;
 
-namespace OmegaFY.Blog.Maui.App.Application.Base;
+namespace OmegaFY.Blog.Maui.App.Models.APIs.Base;
 
 public sealed record class GenericResult<T>
 {
