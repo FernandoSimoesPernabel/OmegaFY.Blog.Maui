@@ -32,7 +32,7 @@ public partial class LoginPageViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoginAsync()
     {
-        GenericResult<LoginResult> result = await _loggedUserService.LoginAsync(new LoginRequest(UserEmail, Password, RememberMe), _cancellationToken);
+        GenericResult<LoginResult> result = await _loggedUserService.LoginAsync(new LoginRequest(UserEmail, Password), RememberMe, _cancellationToken);
 
         if (result.Succeeded)
         {
@@ -52,10 +52,11 @@ public partial class LoginPageViewModel : BaseViewModel
     protected override async Task InternalInitializeAsync()
     {
         string bearerToken = _loggedUserService.TryGetUserBearerToken();
+        Guid? userId = _loggedUserService.TryGetUserId();
 
-        if (!string.IsNullOrWhiteSpace(bearerToken))
+        if (!string.IsNullOrWhiteSpace(bearerToken) && userId.HasValue)
         {
-            await _navigationProvider.GoToMyDashboardAsync(Guid.Empty);
+            await _navigationProvider.GoToMyDashboardAsync(userId.Value);
             return;
         };
 

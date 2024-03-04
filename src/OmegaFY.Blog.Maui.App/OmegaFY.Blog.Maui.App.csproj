@@ -54,6 +54,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\APIs\Requests\ExcludeAccountRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
 

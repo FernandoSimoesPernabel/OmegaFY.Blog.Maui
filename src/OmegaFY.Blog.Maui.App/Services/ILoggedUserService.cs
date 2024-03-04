@@ -8,7 +8,7 @@ public interface ILoggedUserService
 {
     public Task<GenericResult<ExcludeAccountResult>> ExcludeAccountAsync(CancellationToken cancellationToken);
 
-    public Task<GenericResult<LoginResult>> LoginAsync(LoginRequest request, CancellationToken cancellationToken);
+    public Task<GenericResult<LoginResult>> LoginAsync(LoginRequest request, bool rememberMe, CancellationToken cancellationToken);
 
     public Task LogoffLocallyAsync();
 
@@ -21,6 +21,8 @@ public interface ILoggedUserService
     public string TryGetUserBearerToken();
 
     public string TryGetUserEmail();
+
+    public Guid? TryGetUserId();
 
     public Task<string> TryGetUserPasswordAsync();
 

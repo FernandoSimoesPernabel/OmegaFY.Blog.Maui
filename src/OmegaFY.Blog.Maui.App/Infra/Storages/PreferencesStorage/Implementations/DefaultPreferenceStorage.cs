@@ -25,7 +25,7 @@ internal class DefaultPreferenceStorage : IUserPreferencesProvider
 
     public T Get<T>(PreferencesKey preference)
     {
-        if (_preferencesCache.TryGetValue(preference, out var value))
+        if (_preferencesCache.TryGetValue(preference, out object value))
             return (T)value;
 
         return _preferencesStorage.Get<T>(preference.ToString(), default);

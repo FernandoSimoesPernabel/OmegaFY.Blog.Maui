@@ -35,7 +35,9 @@ internal class LoggedUserService : ILoggedUserService
 
     public async Task<GenericResult<ExcludeAccountResult>> ExcludeAccountAsync(CancellationToken cancellationToken)
     {
-        ApiResponse<ExcludeAccountResult> result = await _omegaFyBlogClient.ExcludeAccountAsync(new ExcludeAccountRequest(), cancellationToken);
+        Guid userId = _userPreferencesProvider.Get<Guid>(PreferencesKey.UserId);
+
+        ApiResponse<ExcludeAccountResult> result = await _omegaFyBlogClient.ExcludeAccountAsync(userId, cancellationToken);
 
         if (result.Succeeded)
             ClearUserTokenOnStorage();
@@ -43,14 +45,14 @@ internal class LoggedUserService : ILoggedUserService
         return result.ToGenericResult();
     }
 
-    public async Task<GenericResult<LoginResult>> LoginAsync(LoginRequest command, CancellationToken cancellationToken)
+    public async Task<GenericResult<LoginResult>> LoginAsync(LoginRequest request, bool rememberMe, CancellationToken cancellationToken)
     {
-        ApiResponse<LoginResult> result = await _omegaFyBlogClient.LoginAsync(command, CancellationToken.None);
+        ApiResponse<LoginResult> result = await _omegaFyBlogClient.LoginAsync(request, CancellationToken.None);
 
         await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
-        if (command.RememberMe)
-            await SaveUserPreferencesIfSucceededAsync(result, command.Password);
+        if (rememberMe)
+            await SaveUserPreferencesIfSucceededAsync(result, request.Password);
 
         return result.ToGenericResult();
     }
@@ -68,7 +70,7 @@ internal class LoggedUserService : ILoggedUserService
         ClearUserTokenOnStorage();
 
         if (refreshToken.HasValue)
-            await _omegaFyBlogClient.LogoffAsync(new LogoffRequest(refreshToken.Value), cancellationToken);
+            await _omegaFyBlogClient.LogoffAsync(refreshToken.Value, cancellationToken);
     }
 
     public async Task<GenericResult<RefreshTokenResult>> RefreshTokenAsync(RefreshTokenRequest request, CancellationToken cancellationToken)
@@ -92,6 +94,12 @@ internal class LoggedUserService : ILoggedUserService
     public string TryGetUserBearerToken() => _userPreferencesProvider.Get<string>(PreferencesKey.BearerToken);
 
     public string TryGetUserEmail() => _userPreferencesProvider.Get<string>(PreferencesKey.Email);
+
+    public Guid? TryGetUserId()
+    {
+        Guid userId = _userPreferencesProvider.Get<Guid>(PreferencesKey.UserId);
+        return userId == Guid.Empty ? null : userId;
+    }
 
     public async Task<string> TryGetUserPasswordAsync() => await _safeStorageProvider.GetAsync(SafeStorageKey.Password);
 
