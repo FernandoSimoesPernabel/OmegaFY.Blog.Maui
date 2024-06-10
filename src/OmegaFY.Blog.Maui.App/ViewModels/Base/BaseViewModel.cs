@@ -1,10 +1,11 @@
-﻿using MediatR;
-using OmegaFY.Blog.Maui.App.Infra.Navigation;
+﻿using OmegaFY.Blog.Maui.App.Infra.Navigation;
 
 namespace OmegaFY.Blog.Maui.App.ViewModels.Base;
 
 public abstract partial class BaseViewModel : ObservableObject, IQueryAttributable
 {
+    protected readonly CancellationToken _cancellationToken = new CancellationTokenSource().Token;
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotBusy))]
     private bool isBusy;
@@ -14,15 +15,12 @@ public abstract partial class BaseViewModel : ObservableObject, IQueryAttributab
 
     public bool IsNotBusy => !IsBusy;
 
-    protected readonly IMediator _mediator;
-
     protected readonly INavigationProvider _navigationProvider;
 
-    protected BaseViewModel(IMediator mediator, INavigationProvider navigationProvider, string viewTitle)
+    protected BaseViewModel(INavigationProvider navigationProvider, string viewTitle)
     {
         ViewTitle = viewTitle;
 
-        _mediator = mediator;
         _navigationProvider = navigationProvider;
     }
 

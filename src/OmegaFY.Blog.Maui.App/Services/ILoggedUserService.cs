@@ -1,29 +1,28 @@
-﻿using OmegaFY.Blog.Maui.App.Application.Commands.ExcludeAccount;
-using OmegaFY.Blog.Maui.App.Application.Commands.Login;
-using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
-using OmegaFY.Blog.Maui.App.Application.Commands.Logoff;
-using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
-using OmegaFY.Blog.Maui.App.Application.Base;
+﻿using OmegaFY.Blog.Maui.App.Models.APIs.Base;
+using OmegaFY.Blog.Maui.App.Models.APIs.Requests;
+using OmegaFY.Blog.Maui.App.Models.APIs.Results;
 
 namespace OmegaFY.Blog.Maui.App.Services;
 
 public interface ILoggedUserService
 {
-    public Task<GenericResult<ExcludeAccountCommandResult>> ExcludeAccountAsync(ExcludeAccountCommand command);
+    public Task<GenericResult<ExcludeAccountResult>> ExcludeAccountAsync(CancellationToken cancellationToken);
 
-    public Task<GenericResult<LoginCommandResult>> LoginAsync(LoginCommand command);
+    public Task<GenericResult<LoginResult>> LoginAsync(LoginRequest request, bool rememberMe, CancellationToken cancellationToken);
 
     public Task LogoffLocallyAsync();
 
-    public Task<GenericResult<LogoffCommandResult>> LogoffFromServerAsync(LogoffCommand command);
+    public Task LogoffFromServerAsync(CancellationToken cancellationToken);
 
-    public Task<GenericResult<RefreshTokenCommandResult>> RefreshTokenAsync(RefreshTokenCommand command);
+    public Task<GenericResult<RefreshTokenResult>> RefreshTokenAsync(RefreshTokenRequest request, CancellationToken cancellationToken);
 
-    public Task<GenericResult<RegisterNewUserCommandResult>> RegisterNewUserAsync(RegisterNewUserCommand command);
+    public Task<GenericResult<RegisterNewUserResult>> RegisterNewUserAsync(RegisterNewUserRequest request, CancellationToken cancellationToken);
 
     public string TryGetUserBearerToken();
 
     public string TryGetUserEmail();
+
+    public Guid? TryGetUserId();
 
     public Task<string> TryGetUserPasswordAsync();
 

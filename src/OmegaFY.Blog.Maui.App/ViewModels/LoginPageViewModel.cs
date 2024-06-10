@@ -1,7 +1,7 @@
-﻿using MediatR;
-using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.Login;
-using OmegaFY.Blog.Maui.App.Infra.Navigation;
+﻿using OmegaFY.Blog.Maui.App.Infra.Navigation;
+using OmegaFY.Blog.Maui.App.Models.APIs.Base;
+using OmegaFY.Blog.Maui.App.Models.APIs.Requests;
+using OmegaFY.Blog.Maui.App.Models.APIs.Results;
 using OmegaFY.Blog.Maui.App.Services;
 using OmegaFY.Blog.Maui.App.ViewModels.Base;
 
@@ -24,8 +24,7 @@ public partial class LoginPageViewModel : BaseViewModel
 
     public bool EnableLoginButton => !string.IsNullOrWhiteSpace(UserEmail) && !string.IsNullOrWhiteSpace(Password);
 
-    public LoginPageViewModel(IMediator mediator, INavigationProvider navigationProvider, ILoggedUserService loggedUserService)
-        : base(mediator, navigationProvider, "Login")
+    public LoginPageViewModel(INavigationProvider navigationProvider, ILoggedUserService loggedUserService) : base(navigationProvider, "Login")
     {
         _loggedUserService = loggedUserService;
     }
@@ -33,7 +32,7 @@ public partial class LoginPageViewModel : BaseViewModel
     [RelayCommand]
     public async Task LoginAsync()
     {
-        GenericResult<LoginCommandResult> result = await _mediator.Send(new LoginCommand(UserEmail, Password, RememberMe));
+        GenericResult<LoginResult> result = await _loggedUserService.LoginAsync(new LoginRequest(UserEmail, Password), RememberMe, _cancellationToken);
 
         if (result.Succeeded)
         {
@@ -53,10 +52,11 @@ public partial class LoginPageViewModel : BaseViewModel
     protected override async Task InternalInitializeAsync()
     {
         string bearerToken = _loggedUserService.TryGetUserBearerToken();
+        Guid? userId = _loggedUserService.TryGetUserId();
 
-        if (!string.IsNullOrWhiteSpace(bearerToken))
+        if (!string.IsNullOrWhiteSpace(bearerToken) && userId.HasValue)
         {
-            await _navigationProvider.GoToMyDashboardAsync(Guid.Empty);
+            await _navigationProvider.GoToMyDashboardAsync(userId.Value);
             return;
         };
 

@@ -1,8 +1,9 @@
-﻿using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
-using OmegaFY.Blog.Maui.App.Infra.Dialogs;
+﻿using OmegaFY.Blog.Maui.App.Infra.Dialogs;
 using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Constants;
 using OmegaFY.Blog.Maui.App.Infra.Models;
+using OmegaFY.Blog.Maui.App.Models.APIs.Base;
+using OmegaFY.Blog.Maui.App.Models.APIs.Requests;
+using OmegaFY.Blog.Maui.App.Models.APIs.Results;
 using OmegaFY.Blog.Maui.App.Services;
 using System.Net;
 using System.Net.Http.Headers;
@@ -40,8 +41,8 @@ internal class AuthenticationInterceptor : DelegatingHandler
         if (!refreshToken.HasValue)
             return originalHttpResponse;
 
-        GenericResult<RefreshTokenCommandResult> refreshTokenResult =
-            await _loggedUserService.RefreshTokenAsync(new RefreshTokenCommand(bearerToken, refreshToken.Value));
+        GenericResult<RefreshTokenResult> refreshTokenResult =
+            await _loggedUserService.RefreshTokenAsync(new RefreshTokenRequest(bearerToken, refreshToken.Value), cancellationToken);
 
         if (!refreshTokenResult.Succeeded)
         {

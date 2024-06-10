@@ -2,7 +2,7 @@
 
 public static class IConnectivityExtensions
 {
-    public static bool IsStrongConnection(this IConnectivity connectivity)
+    public static bool HasStrongConnection(this IConnectivity connectivity)
     {
         return connectivity.HasInternet() 
             && (connectivity.ConnectionProfiles.Contains(ConnectionProfile.WiFi) || connectivity.ConnectionProfiles.Contains(ConnectionProfile.Ethernet));

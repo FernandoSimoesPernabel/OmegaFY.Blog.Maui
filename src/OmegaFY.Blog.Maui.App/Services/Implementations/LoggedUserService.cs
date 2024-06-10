@@ -1,17 +1,13 @@
-﻿using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
-using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Base;
-using OmegaFY.Blog.Maui.App.Application.Commands.ExcludeAccount;
-using OmegaFY.Blog.Maui.App.Application.Commands.Login;
-using OmegaFY.Blog.Maui.App.Application.Commands.RefreshToken;
-using OmegaFY.Blog.Maui.App.Application.Commands.Logoff;
-using OmegaFY.Blog.Maui.App.Application.Commands.RegisterNewUser;
-using OmegaFY.Blog.Maui.App.Application.Base;
-using OmegaFY.Blog.Maui.App.Application.Extensions;
-using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
+﻿using OmegaFY.Blog.Maui.App.Infra.Storages.PreferencesStorage;
 using OmegaFY.Blog.Maui.App.Infra.Storages.SafeStorage;
 using OmegaFY.Blog.Maui.App.Infra.Enums;
-using OmegaFY.Blog.Maui.App.Common.Serializers;
 using OmegaFY.Blog.Maui.App.Infra.Navigation;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices;
+using OmegaFY.Blog.Maui.App.Infra.ExternalServices.Base;
+using OmegaFY.Blog.Maui.App.Models.APIs.Base;
+using OmegaFY.Blog.Maui.App.Models.APIs.Results;
+using OmegaFY.Blog.Maui.App.Models.Extensions;
+using OmegaFY.Blog.Maui.App.Models.APIs.Requests;
 
 namespace OmegaFY.Blog.Maui.App.Services.Implementations;
 
@@ -37,19 +33,26 @@ internal class LoggedUserService : ILoggedUserService
         _navigationProvider = navigationProvider;
     }
 
-    public Task<GenericResult<ExcludeAccountCommandResult>> ExcludeAccountAsync(ExcludeAccountCommand command)
+    public async Task<GenericResult<ExcludeAccountResult>> ExcludeAccountAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        Guid userId = _userPreferencesProvider.Get<Guid>(PreferencesKey.UserId);
+
+        ApiResponse<ExcludeAccountResult> result = await _omegaFyBlogClient.ExcludeAccountAsync(userId, cancellationToken);
+
+        if (result.Succeeded)
+            ClearUserTokenOnStorage();
+
+        return result.ToGenericResult();
     }
 
-    public async Task<GenericResult<LoginCommandResult>> LoginAsync(LoginCommand command)
+    public async Task<GenericResult<LoginResult>> LoginAsync(LoginRequest request, bool rememberMe, CancellationToken cancellationToken)
     {
-        ApiResponse<LoginCommandResult> result = await _omegaFyBlogClient.LoginAsync(command, CancellationToken.None);
+        ApiResponse<LoginResult> result = await _omegaFyBlogClient.LoginAsync(request, CancellationToken.None);
 
         await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
-        if (command.RememberMe)
-            await SaveUserPreferencesIfSucceededAsync(result, command.Password);
+        if (rememberMe)
+            await SaveUserPreferencesIfSucceededAsync(result, request.Password);
 
         return result.ToGenericResult();
     }
@@ -60,29 +63,43 @@ internal class LoggedUserService : ILoggedUserService
         await _navigationProvider.GoToLoginAsync();
     }
 
-    public Task<GenericResult<LogoffCommandResult>> LogoffFromServerAsync(LogoffCommand command)
+    public async Task LogoffFromServerAsync(CancellationToken cancellationToken)
     {
+        Guid? refreshToken = await TryGetUserRefreshTokenAsync();
+
         ClearUserTokenOnStorage();
-        throw new NotImplementedException();
+
+        if (refreshToken.HasValue)
+            await _omegaFyBlogClient.LogoffAsync(refreshToken.Value, cancellationToken);
     }
 
-    public async Task<GenericResult<RefreshTokenCommandResult>> RefreshTokenAsync(RefreshTokenCommand command)
+    public async Task<GenericResult<RefreshTokenResult>> RefreshTokenAsync(RefreshTokenRequest request, CancellationToken cancellationToken)
     {
-        ApiResponse<RefreshTokenCommandResult> result = await _omegaFyBlogClient.RefreshTokenAsync(command, CancellationToken.None);
+        ApiResponse<RefreshTokenResult> result = await _omegaFyBlogClient.RefreshTokenAsync(request, cancellationToken);
 
         await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
 
         return result.ToGenericResult();
     }
 
-    public Task<GenericResult<RegisterNewUserCommandResult>> RegisterNewUserAsync(RegisterNewUserCommand command)
+    public async Task<GenericResult<RegisterNewUserResult>> RegisterNewUserAsync(RegisterNewUserRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        GenericResult<RegisterNewUserResult> result = null;
+
+        await SaveUserTokenIfSucceededAsync(result.Succeeded, result.Data?.Token, result.Data?.RefreshToken);
+
+        return result;
     }
 
     public string TryGetUserBearerToken() => _userPreferencesProvider.Get<string>(PreferencesKey.BearerToken);
 
     public string TryGetUserEmail() => _userPreferencesProvider.Get<string>(PreferencesKey.Email);
+
+    public Guid? TryGetUserId()
+    {
+        Guid userId = _userPreferencesProvider.Get<Guid>(PreferencesKey.UserId);
+        return userId == Guid.Empty ? null : userId;
+    }
 
     public async Task<string> TryGetUserPasswordAsync() => await _safeStorageProvider.GetAsync(SafeStorageKey.Password);
 
@@ -100,7 +117,7 @@ internal class LoggedUserService : ILoggedUserService
             ClearUserTokenOnStorage();
     }
 
-    private async Task SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginCommandResult> result, string password)
+    private async Task SaveUserPreferencesIfSucceededAsync(ApiResponse<LoginResult> result, string password)
     {
         if (result.Failed) return;
 
